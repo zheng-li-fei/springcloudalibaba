@@ -3,7 +3,7 @@
 .project
 .settings
 target
-.idea
+.idea/*
 .vscode
 .DS_Store
 .factorypath
@@ -16,4 +16,5 @@ work
 test/logs
 derby.log
 yarn.lock
-.flattened-pom.xml
+.flattened-pom.xmly.pub
+y
