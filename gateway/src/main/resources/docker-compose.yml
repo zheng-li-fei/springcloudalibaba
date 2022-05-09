@@ -1,0 +1,152 @@
+# docker-compose -f xxx.yml up [ -d ]
+# 默认文件名为docker-compose.yml时 , -f可以省略 , -d 是后台运行。
+
+version: "3.3"
+services:
+  mysql:
+    #要启动的镜像名称
+    image: mysql:5.7.35
+    #启动的容器名称
+    container_name: mysql
+    restart: on-failure:3
+    #挂载
+    volumes:
+      - /home/zlf/docker_data/mysql/datadir:/var/lib/mysql
+      - /home/zlf/docker_data/mysql/conf.d:/etc/mysql/conf.d
+    #network_mode: host
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "123456"
+      #MYSQL_DATABASE: "数据库名称"
+      #MYSQL_USER: "用户名"
+      #MYSQL_PASSWORD: "用户密码"
+    ports:
+      - 3306:3306
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_bin
+
+#  redis:
+#    image: docker.io/redis:latest
+#    container_name: redis
+#    restart: always
+#    volumes:
+#      - /home/zlf/docker_data/redis/redis.conf:/etc/redis.conf
+#      - /home/zlf/docker_data/redis/data:/data
+#    environment:
+#      TZ: Asia/Shanghai
+#    ports:
+#      - 6379:6379
+
+#  nginx:
+#    image: nginx:latest
+#    container_name: nginx
+#    restart: always
+#    volumes:
+#      - /home/zlf/docker_data/nginx/nginx.conf:/etc/nginx/nginx.conf
+#    environment:
+#      TZ: Asia/Shanghai
+#    ports:
+#      - 8090:8090
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
+    container_name: elasticsearch
+    restart: on-failure:3
+    volumes:
+      - /home/zlf/docker_data/elasticsearch/logs:/usr/share/elasticsearch/logs
+      - /home/zlf/docker_data/elasticsearch/data:/usr/share/elasticsearch/data
+    #network_mode: host
+    environment:
+      TZ: Asia/Shanghai
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  nacos:
+    image: nacos/nacos-server:2.0.3
+    container_name: nacos
+    restart: on-failure:3
+    volumes:
+      - /home/zlf/docker_data/nacos/conf/application.properties:/home/nacos/conf/application.properties
+      - /home/zlf/docker_data/nacos/logs:/home/nacos/logs
+    #network_mode: host
+    environment:
+      TZ: Asia/Shanghai
+      MODE: standalone
+    ports:
+      - 8848:8848
+      - 9848:9848
+    depends_on:
+      - mysql
+
+  seata:
+    image: docker.io/seataio/seata-server:1.3.0
+    container_name: seata
+    restart: on-failure:3
+    volumes:
+      - /home/zlf/docker_data/seata/config/file.conf:/seata-server/resources/file.conf
+      - /home/zlf/docker_data/seata/config/registry.conf:/seata-server/resources/registry.conf
+      - /home/zlf/docker_data/seata/logs:/root/logs
+    #network_mode: host
+    environment:
+      TZ: Asia/Shanghai
+      SEATA_PORT: 8891
+      SEATA_IP: 192.168.181.131
+    ports:
+      - 8891:8891
+    depends_on:
+      - nacos
+
+  skywalking-oap:
+    image: apache/skywalking-oap-server:8.7.0-es7
+    container_name: skywalking-oap
+    restart: on-failure:3
+    volumes:
+      - /home/zlf/docker_data/skywalking/skywalking-oap/config/application.yml:/skywalking/config/application.yml
+    #network_mode: host
+    environment:
+      SW_STORAGE: elasticsearch7  # 指定ES
+      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+      TZ: Asia/Shanghai
+    #使用别名时需要使用links
+    links:
+      - elasticsearch
+    ports:
+      - 11800:11800
+      - 12800:12800
+    depends_on:
+      - elasticsearch
+
+  skywalking-ui:
+    image: apache/skywalking-ui:8.7.0
+    container_name: skywalking-ui
+    restart: on-failure:3
+    volumes:
+      - /home/zlf/docker_data/skywalking/skywalking-ui/config/webapp.yml:/skywalking/webapp/webapp.yml
+    #network_mode: host
+    environment:
+      SW_OAP_ADDRESS: http://skywalking-oap:12800
+      TZ: Asia/Shanghai
+    links:
+      - skywalking-oap
+    ports:
+      - 8088:8088
+    depends_on:
+      - skywalking-oap
+
+#  srs:
+#    image: ossrs/srs:4
+#    container_name: srs
+#    restart: always
+#    volumes:
+#      - /home/zlf/docker_data/srs/srs.conf:/usr/local/srs/conf/srs.conf
+#    environment:
+#      TZ: Asia/Shanghai
+#    ports:
+#      - 1935:1935
+#      - 1985:1985
+#      - 8080:8080

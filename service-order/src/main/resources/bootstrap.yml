@@ -1,0 +1,19 @@
+nacos:
+  #nacos服务地址
+  address: 192.168.181.131
+  #nacos服务ip
+  port: 8848
+
+spring:
+  profiles:
+    active: dev
+  application:
+    #读取的配置文件名称 - 与 Data ID 对应
+    name: service-order
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.address}:${nacos.port}
+        file-extension: yml
+      discovery:
+        server-addr: ${nacos.address}:${nacos.port}
