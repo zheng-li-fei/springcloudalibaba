@@ -1,14 +1,16 @@
 # docker-compose -f xxx.yml up [ -d ]
+# docker-compose --compatibility up -d , 由于做了资源限制, 并且没有使用swarm, 所以要加上--compatibility参数, 不然会报错
 # 默认文件名为docker-compose.yml时 , -f可以省略 , -d 是后台运行。
 
-version: "3.3"
+version: "3.7"
 services:
   mysql:
     #要启动的镜像名称
     image: mysql:5.7.35
     #启动的容器名称
     container_name: mysql
-    restart: on-failure:3
+    privileged: true
+    restart: on-failure:5
     #挂载
     volumes:
       - /home/zlf/docker_data/mysql/datadir:/var/lib/mysql
@@ -26,10 +28,15 @@ services:
       - --default-authentication-plugin=mysql_native_password
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_bin
+    deploy:
+      resources:
+        limits:
+          memory: 368m
 
 #  redis:
 #    image: docker.io/redis:latest
 #    container_name: redis
+#    privileged: true
 #    restart: always
 #    volumes:
 #      - /home/zlf/docker_data/redis/redis.conf:/etc/redis.conf
@@ -42,6 +49,7 @@ services:
 #  nginx:
 #    image: nginx:latest
 #    container_name: nginx
+#    privileged: true
 #    restart: always
 #    volumes:
 #      - /home/zlf/docker_data/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -53,7 +61,8 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
     container_name: elasticsearch
-    restart: on-failure:3
+    privileged: true
+    restart: on-failure:5
     volumes:
       - /home/zlf/docker_data/elasticsearch/logs:/usr/share/elasticsearch/logs
       - /home/zlf/docker_data/elasticsearch/data:/usr/share/elasticsearch/data
@@ -65,11 +74,16 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    deploy:
+      resources:
+        limits:
+          memory: 1024m
 
   nacos:
     image: nacos/nacos-server:2.0.3
     container_name: nacos
-    restart: on-failure:3
+    privileged: true
+    restart: on-failure:5
     volumes:
       - /home/zlf/docker_data/nacos/conf/application.properties:/home/nacos/conf/application.properties
       - /home/zlf/docker_data/nacos/logs:/home/nacos/logs
@@ -82,11 +96,16 @@ services:
       - 9848:9848
     depends_on:
       - mysql
+    deploy:
+      resources:
+        limits:
+          memory: 1024m
 
   seata:
     image: docker.io/seataio/seata-server:1.3.0
     container_name: seata
-    restart: on-failure:3
+    privileged: true
+    restart: on-failure:5
     volumes:
       - /home/zlf/docker_data/seata/config/file.conf:/seata-server/resources/file.conf
       - /home/zlf/docker_data/seata/config/registry.conf:/seata-server/resources/registry.conf
@@ -100,11 +119,16 @@ services:
       - 8891:8891
     depends_on:
       - nacos
+    deploy:
+      resources:
+        limits:
+          memory: 368m
 
   skywalking-oap:
     image: apache/skywalking-oap-server:8.7.0-es7
     container_name: skywalking-oap
-    restart: on-failure:3
+    privileged: true
+    restart: on-failure:5
     volumes:
       - /home/zlf/docker_data/skywalking/skywalking-oap/config/application.yml:/skywalking/config/application.yml
     #network_mode: host
@@ -120,13 +144,16 @@ services:
       - 12800:12800
     depends_on:
       - elasticsearch
+    deploy:
+      resources:
+        limits:
+          memory: 1024m
 
   skywalking-ui:
     image: apache/skywalking-ui:8.7.0
     container_name: skywalking-ui
-    restart: on-failure:3
-    volumes:
-      - /home/zlf/docker_data/skywalking/skywalking-ui/config/webapp.yml:/skywalking/webapp/webapp.yml
+    privileged: true
+    restart: on-failure:5
     #network_mode: host
     environment:
       SW_OAP_ADDRESS: http://skywalking-oap:12800
@@ -137,10 +164,38 @@ services:
       - 8088:8088
     depends_on:
       - skywalking-oap
+    deploy:
+      resources:
+        limits:
+          memory: 368m
+
+  jenkins:
+    image: jenkins/jenkins:2.332.3-centos7-jdk8
+    container_name: jenkins
+    privileged: true
+    restart: on-failure:5
+    volumes:
+      - /home/zlf/docker_data/jenkins:/var/jenkins_home
+      #jenkins容器需要实例化其他Docker容器，则该守护进程是必需的
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/zlf/mysoft/apache-maven-3.8.5:/usr/local/maven
+      - /usr/java/jdk1.8.0_131:/usr/local/java
+    #network_mode: host
+    environment:
+      TZ: Asia/Shanghai
+      JAVA_OPTS: '-Djava.util.logging.config.file=/home/zlf/docker_data/jenkins/log.properties'
+    ports:
+      - 8089:8080
+      - 50000:50000
+    deploy:
+      resources:
+        limits:
+          memory: 1216m
 
 #  srs:
 #    image: ossrs/srs:4
 #    container_name: srs
+#    privileged: true
 #    restart: always
 #    volumes:
 #      - /home/zlf/docker_data/srs/srs.conf:/usr/local/srs/conf/srs.conf
