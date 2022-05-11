@@ -16,10 +16,10 @@
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
+        <!--commons-lang-->
         <dependency>
-            <groupId>com.yiqitong</groupId>
-            <artifactId>yiqitong-base-spring-boot-starter</artifactId>
-            <version>${yiqitong-base-spring-boot-starter.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <!-- 工具插件 -->

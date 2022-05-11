@@ -2,8 +2,8 @@ package com.example.common.response;
 
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.IoUtil;
+import com.example.common.exception.CommonCodeEnumEx;
 import com.example.common.exception.IErrorInfo;
-import com.yiqitong.baseproject.enums.CommonCodeEnumEx;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.StringUtils;
