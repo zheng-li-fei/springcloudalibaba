@@ -179,6 +179,7 @@ services:
       #jenkins容器需要实例化其他Docker容器，则该守护进程是必需的
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/zlf/mysoft/apache-maven-3.8.5:/usr/local/maven
+      - /usr/local/git:/usr/local/git
       - /usr/java/jdk1.8.0_131:/usr/local/java
     #network_mode: host
     environment:
