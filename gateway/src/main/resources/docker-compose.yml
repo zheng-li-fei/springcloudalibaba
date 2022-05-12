@@ -1,6 +1,9 @@
 # docker-compose -f xxx.yml up [ -d ]
 # docker-compose --compatibility up -d , 由于做了资源限制, 并且没有使用swarm, 所以要加上--compatibility参数, 不然会报错
+
 # 默认文件名为docker-compose.yml时 , -f可以省略 , -d 是后台运行。
+
+#安装 jenkins 运行docker ，需要在镜像内装docker client : yum install docker-client
 
 version: "3.7"
 services:
@@ -173,11 +176,14 @@ services:
     image: jenkins/jenkins:2.332.3-centos7-jdk8
     container_name: jenkins
     privileged: true
+    user: root
     restart: on-failure:5
     volumes:
       - /home/zlf/docker_data/jenkins:/var/jenkins_home
       #jenkins容器需要实例化其他Docker容器，则该守护进程是必需的
       - /var/run/docker.sock:/var/run/docker.sock
+      #容器内需要执行docker命令
+      - /usr/bin/docker:/usr/bin/docker
       - /home/zlf/mysoft/apache-maven-3.8.5:/usr/local/maven
       - /usr/local/git:/usr/local/git
       - /usr/java/jdk1.8.0_131:/usr/local/java
