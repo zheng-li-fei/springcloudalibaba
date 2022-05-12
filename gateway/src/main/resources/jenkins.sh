@@ -30,5 +30,5 @@ docker build --build-arg JAR_FILE=./${project_name}/target/${project_name}-0.0.1
 echo '构建完毕'
 
 echo '启动镜像容器服务开始'
-docker run --privileged=true -itd --name ${project_name} --restart=always -m 512m -v /home/zlf/springcloudalibaba/logs/${project_name}/:/root/logs/shop -e JVM_PARAM="" -p 8884:8884 ${service_name}/${project_name}:${tag}
+docker run --privileged=true -itd --name ${project_name} --restart=always -m 512m -v /home/zlf/springcloudalibaba/logs/${project_name}/:${project_name}/logs/${project_name} -e JVM_PARAM="" -p 8884:8884 ${service_name}/${project_name}:${tag}
 echo '启动镜像容器服务结束'
