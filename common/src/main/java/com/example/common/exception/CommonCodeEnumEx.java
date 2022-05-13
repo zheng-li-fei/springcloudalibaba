@@ -7,7 +7,7 @@ public enum CommonCodeEnumEx implements IErrorInfo {
     private final int code;
     private final String message;
 
-    private CommonCodeEnumEx(int code, String message) {
+    CommonCodeEnumEx(int code, String message) {
         this.code = code;
         this.message = message;
     }

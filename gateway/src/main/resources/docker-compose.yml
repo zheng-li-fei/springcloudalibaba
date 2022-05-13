@@ -4,6 +4,7 @@
 # 默认文件名为docker-compose.yml时 , -f可以省略 , -d 是后台运行。
 
 #安装 jenkins 运行docker ，需要在镜像内装docker client : yum install docker-client
+#保存修改到镜像    docker commit -m "增加docker服务" "容器id" "镜像名"
 
 version: "3.7"
 services:
@@ -164,7 +165,7 @@ services:
     links:
       - skywalking-oap
     ports:
-      - 8088:8088
+      - 8088:8080
     depends_on:
       - skywalking-oap
     deploy:
@@ -182,8 +183,6 @@ services:
       - /home/zlf/docker_data/jenkins:/var/jenkins_home
       #jenkins容器需要实例化其他Docker容器，则该守护进程是必需的
       - /var/run/docker.sock:/var/run/docker.sock
-      #容器内需要执行docker命令
-      - /usr/bin/docker:/usr/bin/docker
       - /home/zlf/mysoft/apache-maven-3.8.5:/usr/local/maven
       - /usr/local/git:/usr/local/git
       - /usr/java/jdk1.8.0_131:/usr/local/java

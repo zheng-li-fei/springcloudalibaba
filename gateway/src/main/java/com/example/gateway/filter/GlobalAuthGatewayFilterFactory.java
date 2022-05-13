@@ -35,17 +35,17 @@ public class GlobalAuthGatewayFilterFactory implements GlobalFilter {
         HttpHeaders headers = request.getHeaders();
 
         String token = headers.getFirst(HEADER_TOKEN_NAME);
+        //1.判断是否传了token
         if (StringUtils.isBlank(token)) {
             log.error("全局权限过滤器,请求资源地址:{},未登录", request.getURI());
-            //响应类型
-            //response.getHeaders().add("Content-Type", "application/json;charset=utf-8");
-            //响应状态码：401，未授权
-            //response.setStatusCode(HttpStatus.UNAUTHORIZED);
             //响应内容
             String message = JSON.toJSONString(ResEx.error(HttpStatus.UNAUTHORIZED.value(), "authorization authentication failed"));
             DataBuffer buffer = response.bufferFactory().wrap(message.getBytes());
             return response.writeWith(Mono.just(buffer));
         }
+
+        //2.判断token是否合法
+
         //继续执行
         return chain.filter(exchange);
     }

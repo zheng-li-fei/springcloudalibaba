@@ -2,7 +2,6 @@ package com.example.servicestock.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.servicestock.mapper.entity.StockDO;
-import com.example.servicestock.service.bo.StockReqBO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 

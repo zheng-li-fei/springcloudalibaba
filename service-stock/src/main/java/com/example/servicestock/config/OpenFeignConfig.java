@@ -29,6 +29,6 @@ public class OpenFeignConfig {
      */
     @Bean
     public Request.Options options() {
-        return new Request.Options(5, TimeUnit.SECONDS, 5, TimeUnit.SECONDS, true);
+        return new Request.Options(5, TimeUnit.SECONDS, 10, TimeUnit.SECONDS, true);
     }
 }
