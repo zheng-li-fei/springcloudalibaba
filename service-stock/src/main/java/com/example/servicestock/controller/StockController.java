@@ -2,6 +2,7 @@ package com.example.servicestock.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.example.servicestock.config.GlobalBlockHandler;
 import com.example.servicestock.controller.vo.StockReqVO;
 import com.example.servicestock.service.StockService;
 import com.example.servicestock.service.bo.StockReqBO;
@@ -22,7 +23,7 @@ public class StockController {
     @Autowired
     StockService stockService;
 
-    @SentinelResource(value = "addStock")
+    @SentinelResource(value = "addStock",blockHandler = "blockHandler",blockHandlerClass = GlobalBlockHandler.class)
     @RequestMapping(value = "/stock/addStock", method = RequestMethod.POST)
     public void addStock(@RequestBody StockReqVO stockReqVO) {
         StockReqBO stockReqBO = StockReqBO.builder().build();
