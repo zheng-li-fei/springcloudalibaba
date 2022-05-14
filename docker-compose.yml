@@ -37,18 +37,23 @@ services:
         limits:
           memory: 368m
 
-#  redis:
-#    image: docker.io/redis:latest
-#    container_name: redis
-#    privileged: true
-#    restart: always
-#    volumes:
-#      - /home/zlf/docker_data/redis/redis.conf:/etc/redis.conf
-#      - /home/zlf/docker_data/redis/data:/data
-#    environment:
-#      TZ: Asia/Shanghai
-#    ports:
-#      - 6379:6379
+  redis:
+    image: docker.io/redis:latest
+    container_name: redis
+    privileged: true
+    restart: always
+    volumes:
+      - /home/zlf/docker_data/redis/7001/redis.conf:/etc/redis/redis.conf
+      - /home/zlf/docker_data/redis/7001/data:/data
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - 7001:7001
+    command: redis-server /etc/redis/redis.conf
+    deploy:
+      resources:
+        limits:
+          memory: 256m
 
 #  nginx:
 #    image: nginx:latest
