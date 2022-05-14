@@ -27,28 +27,29 @@ public class StockServiceImpl implements StockService {
 
     @Override
     public void addStock(StockReqBO stockReqBO) {
-        if (stockReqBO == null || StringUtils.isBlank(stockReqBO.getGoodsId()) || stockReqBO.getStock() == null) {
+        if (stockReqBO == null || StringUtils.isBlank(stockReqBO.getGoodsId())) {
             throw new BizException("新增库存操作参数异常");
         }
         StockDO stockDO = StockDO.builder().build();
-        BeanUtil.copyProperties(stockReqBO,stockDO);
+        BeanUtil.copyProperties(stockReqBO, stockDO);
+
         Integer integer = stockDao.addStock(stockDO);
-        if(integer < 0){
-            throw new BizException("库存操作异常");
+        if (integer <= 0) {
+            throw new BizException("库存新增异常");
         }
     }
 
     @Override
     public void reduceStock(StockReqBO stockReqBO) {
         if (stockReqBO == null || StringUtils.isBlank(stockReqBO.getGoodsId())
-                || stockReqBO.getOperatorStockNum() == null
-                || stockReqBO.getStock() == null) {
+                || stockReqBO.getOperatorStockNum() == null) {
             throw new BizException("减少库存操作参数异常");
         }
         StockDO stockDO = StockDO.builder().build();
-        BeanUtil.copyProperties(stockReqBO,stockDO);
+        BeanUtil.copyProperties(stockReqBO, stockDO);
+
         Integer integer = stockDao.reduceStock(stockDO);
-        if(integer < 0){
+        if (integer <= 0) {
             throw new BizException("库存不足");
         }
     }

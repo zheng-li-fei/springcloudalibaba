@@ -1,6 +1,9 @@
 package com.example.servicestock.controller.vo;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @description:
@@ -17,11 +20,6 @@ public class StockReqVO {
      * 商品id
      */
     String goodsId;
-
-    /**
-     * 当前库存数
-     */
-    Integer stock;
 
     /**
      * 操作的库存数

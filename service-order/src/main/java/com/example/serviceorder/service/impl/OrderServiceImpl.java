@@ -47,7 +47,6 @@ public class OrderServiceImpl implements OrderService {
         //2.扣减库存
         StockReqVO stockReqVO = StockReqVO.builder().build();
         stockReqVO.setGoodsId(orderReqBO.getGoodsId());
-        stockReqVO.setStock(stockResBO.getStock());
         stockReqVO.setOperatorStockNum(orderReqBO.getOrderNum());
         stockServiceFeign.reduceStock(stockReqVO);
 

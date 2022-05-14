@@ -20,8 +20,9 @@ public class StockReqBO {
 
     String goodsId;
 
-    Integer stock;
-
+    /**
+     * 新增/减少的库存数
+     */
     Integer operatorStockNum;
 
 }

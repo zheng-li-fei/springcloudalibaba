@@ -33,7 +33,7 @@
         goods
         set
         stock = stock - #{stockDO.operatorStockNum}
-        where goods_id = #{stockDO.goodsId} and stock = #{stockDO.stock}
+        where goods_id = #{stockDO.goodsId} and stock - #{stockDO.operatorStockNum} >= 0
     </update>
 
 </mapper>
