@@ -25,7 +25,7 @@ spring:
       #限流降级数据看板
       transport:
         port: 8719
-        dashboard: 192.168.181.131:8719
+        dashboard: 192.168.181.131:8858
         eager: true
 
 
