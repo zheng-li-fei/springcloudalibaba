@@ -19,8 +19,8 @@ spring:
       datasource:
         ds:
           nacos:
-            server-addr: 192.168.181.131:8848
-            data-id: service-stock-sentinel
+            serverAddr: 192.168.181.131:8848
+            dataId: service-stock-sentinel
             group-id: DEFAULT_GROUP
             rule-type: flow
       #限流降级数据看板
@@ -73,7 +73,7 @@ seata:
       default_tx_group: default
 
 
-###应用端配置###
+####################################应用端配置####################################
 gateway:
   cloud:
     onlyFetchByGateway: true

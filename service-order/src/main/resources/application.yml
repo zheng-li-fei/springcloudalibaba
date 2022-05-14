@@ -74,7 +74,7 @@ seata:
     vgroupMapping:
       default_tx_group: default
 
-###应用端配置###
+####################################应用端配置####################################
 gateway:
   cloud:
     onlyFetchByGateway: true
