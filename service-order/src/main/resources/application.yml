@@ -16,11 +16,12 @@ spring:
   cloud:
     sentinel:
       datasource:
-        nacos:
-          server-addr: 192.168.181.131:8848
-          data-id: ${spring.application.name}-sentinel
-          group-id: DEFAULT_GROUP
-          rule-type: flow
+        ds:
+          nacos:
+            server-addr: 192.168.181.131:8848
+            data-id: ${spring.application.name}-sentinel
+            group-id: DEFAULT_GROUP
+            rule-type: flow
       #限流降级数据看板
       transport:
         port: 8719
