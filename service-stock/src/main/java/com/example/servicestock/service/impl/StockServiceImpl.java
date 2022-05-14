@@ -32,7 +32,10 @@ public class StockServiceImpl implements StockService {
         }
         StockDO stockDO = StockDO.builder().build();
         BeanUtil.copyProperties(stockReqBO,stockDO);
-        stockDao.addStock(stockDO);
+        Integer integer = stockDao.addStock(stockDO);
+        if(integer < 0){
+            throw new BizException("库存操作异常");
+        }
     }
 
     @Override
@@ -44,7 +47,10 @@ public class StockServiceImpl implements StockService {
         }
         StockDO stockDO = StockDO.builder().build();
         BeanUtil.copyProperties(stockReqBO,stockDO);
-        stockDao.reduceStock(stockDO);
+        Integer integer = stockDao.reduceStock(stockDO);
+        if(integer < 0){
+            throw new BizException("库存不足");
+        }
     }
 
     @Override

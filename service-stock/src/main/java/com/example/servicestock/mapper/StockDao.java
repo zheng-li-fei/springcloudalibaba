@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StockDao extends BaseMapper<StockDO> {
 
-    boolean addStock(@Param(value = "stockDO") StockDO stockDO);
+    Integer addStock(@Param(value = "stockDO") StockDO stockDO);
 
-    boolean reduceStock(@Param(value = "stockDO") StockDO stockDO);
+    Integer reduceStock(@Param(value = "stockDO") StockDO stockDO);
 }
