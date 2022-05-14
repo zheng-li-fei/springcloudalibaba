@@ -34,10 +34,10 @@ spring:
             #转发之前去掉第一层路由
             - StripPrefix=1
             - name: RequestRateLimiter
-                args:
-                  key-resolver: '#{@hostAddrKeyResolver}'
-                  redis-rate-limiter.replenishRate: 1   #令牌桶每秒填充平均速率
-                  redis-rate-limiter.burstCapacity: 3   #令牌桶总容量
+              args:
+                key-resolver: '#{@hostAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 1   #令牌桶每秒填充平均速率
+                redis-rate-limiter.burstCapacity: 3   #令牌桶总容量
         #库存路由
         - id: route-service-stock
           uri: lb://service-stock
@@ -47,10 +47,10 @@ spring:
           filters:
             - StripPrefix=1
             - name: RequestRateLimiter
-                args:
-                  key-resolver: '#{@hostAddrKeyResolver}'
-                  redis-rate-limiter.replenishRate: 1
-                  redis-rate-limiter.burstCapacity: 3
+              args:
+                key-resolver: '#{@hostAddrKeyResolver}'
+                redis-rate-limiter.replenishRate: 1
+                redis-rate-limiter.burstCapacity: 3
 
 
 #配置seata的注册中心
