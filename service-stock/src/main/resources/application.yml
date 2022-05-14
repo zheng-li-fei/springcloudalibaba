@@ -12,7 +12,7 @@ spring:
     database: 0
     host: 192.168.181.131
     port: 7001
-    password:
+    password: 123456
   cloud:
     sentinel:
       datasource:
