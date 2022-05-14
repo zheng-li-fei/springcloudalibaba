@@ -83,6 +83,21 @@ services:
         limits:
           memory: 1024m
 
+  sentinel:
+    image: bladex/sentinel-dashboard
+    container_name: sentinel-dashboard
+    privileged: true
+    restart: on-failure:5
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - 8858:8858
+      - 8719:8719
+    deploy:
+      resources:
+        limits:
+          memory: 288m
+
   nacos:
     image: nacos/nacos-server:2.0.3
     container_name: nacos

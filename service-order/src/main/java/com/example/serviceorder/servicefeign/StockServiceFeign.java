@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @description: 调用远程的库存服务
  * @author: zhenglifei
  * @create: 2022/4/19 15:16
+ *
+ * name:指定调用rest接口所对应的服务名
  **/
 @FeignClient(value = "service-stock",fallback = StockServiceFeignFallback.class)
 public interface StockServiceFeign {

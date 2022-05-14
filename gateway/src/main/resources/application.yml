@@ -30,6 +30,15 @@ spring:
           filters:
             #转发之前去掉第一层路由
             - StripPrefix=1
+        #库存路由
+        - id: route-service-stock
+          uri: lb://service-stock
+          predicates:
+            - Path=/service-stock/**
+            - Method=GET,POST
+          filters:
+            - StripPrefix=1
+
 
 #配置seata的注册中心
 seata:

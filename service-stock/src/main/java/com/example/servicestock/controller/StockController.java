@@ -1,6 +1,7 @@
 package com.example.servicestock.controller;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.example.servicestock.controller.vo.StockReqVO;
 import com.example.servicestock.service.StockService;
 import com.example.servicestock.service.bo.StockReqBO;
@@ -21,6 +22,7 @@ public class StockController {
     @Autowired
     StockService stockService;
 
+    @SentinelResource(value = "addStock")
     @RequestMapping(value = "/stock/addStock", method = RequestMethod.POST)
     public void addStock(@RequestBody StockReqVO stockReqVO) {
         StockReqBO stockReqBO = StockReqBO.builder().build();
@@ -28,6 +30,7 @@ public class StockController {
         stockService.addStock(stockReqBO);
     }
 
+    @SentinelResource(value = "reduceStock")
     @RequestMapping(value = "/stock/reduceStock", method = RequestMethod.POST)
     public void reduceStock(@RequestBody StockReqVO stockReqVO) {
         StockReqBO stockReqBO = StockReqBO.builder().build();
