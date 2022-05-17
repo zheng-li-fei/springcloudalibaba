@@ -7,16 +7,18 @@
         <result column="id" property="id"/>
         <result column="goods_id" property="goodsId"/>
         <result column="stock" property="stock"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, goods_id, stock
+        id, goods_id, stock, create_time, update_time
     </sql>
 
     <!-- 通用新增列 -->
     <sql id="Insert_Column_List">
-         id, goods_id, stock
+         id, goods_id, stock, create_time, update_time
     </sql>
 
 
@@ -33,7 +35,7 @@
         goods
         set
         stock = stock - #{stockDO.operatorStockNum}
-        where goods_id = #{stockDO.goodsId} and stock - #{stockDO.operatorStockNum} >= 0
+        where goods_id = #{stockDO.goodsId} and (stock - #{stockDO.operatorStockNum}) >= 0
     </update>
 
 </mapper>

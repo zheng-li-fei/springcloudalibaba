@@ -4,9 +4,9 @@ import com.example.common.exception.BizException;
 import com.example.serviceorder.mapper.OrderDao;
 import com.example.serviceorder.service.OrderService;
 import com.example.serviceorder.service.bo.OrderReqBO;
-import com.example.serviceorder.servicefeign.StockServiceFeign;
-import com.example.serviceorder.servicefeign.feignVO.StockReqVO;
-import com.example.serviceorder.servicefeign.feignVO.StockResBO;
+import com.example.serviceorder.servicefeign.ServiceFeign;
+import com.example.serviceorder.servicefeign.stock.feignVO.StockReqVO;
+import com.example.serviceorder.servicefeign.stock.feignVO.StockResBO;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     OrderDao orderDao;
 
     @Resource
-    StockServiceFeign stockServiceFeign;
+    ServiceFeign serviceFeign;
 
 
     @Override
@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         //1.判断商品是否存在
-        StockResBO stockResBO = stockServiceFeign.existGoods(orderReqBO.getGoodsId());
+        StockResBO stockResBO = serviceFeign.existGoods(orderReqBO.getGoodsId());
         if (stockResBO == null || StringUtils.isBlank(stockResBO.getGoodsId())) {
             throw new BizException("商品不存在");
         }
@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
         StockReqVO stockReqVO = StockReqVO.builder().build();
         stockReqVO.setGoodsId(orderReqBO.getGoodsId());
         stockReqVO.setOperatorStockNum(orderReqBO.getOrderNum());
-        stockServiceFeign.reduceStock(stockReqVO);
+        serviceFeign.reduceStock(stockReqVO);
 
         //3.下单
          orderDao.insert(orderReqBO) ;

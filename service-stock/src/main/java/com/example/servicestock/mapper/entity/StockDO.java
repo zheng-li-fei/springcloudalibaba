@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -24,6 +26,12 @@ public class StockDO {
 
     @TableField(value = "stock")
     Integer stock;
+
+    @TableField(value = "create_time")
+    Date createTime;
+
+    @TableField(value = "update_time")
+    Date updateTime;
 
     @TableField(exist = false)
     Integer operatorStockNum;

@@ -109,6 +109,23 @@ CREATE TABLE `orders`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
+CREATE TABLE `sys_log` (
+  `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '日志编号',
+  `service_id` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '应用标识',
+  `type` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '日志类型',
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '日志标题',
+  `method` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作方式',
+  `request_uri` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '请求uri',
+  `params` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '数据',
+  `user_agent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '用户代理',
+  `remote_addr` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '操作ip地址',
+  `exception` longtext COLLATE utf8mb4_unicode_ci COMMENT '异常信息',
+  `time` datetime DEFAULT NULL COMMENT '方法执行时间',
+  `creator` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Table structure for undo_log

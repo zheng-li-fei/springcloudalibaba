@@ -36,13 +36,6 @@ mybatis-plus:
     db-config:
       id-type: auto
 
-# 配置openfeign默认超时时间  默认时间 单位毫秒
-feign:
-  client:
-    default-config:
-      connectTimeout: 5000
-      readTimeout: 10000
-
 #配置seata的注册中心
 seata:
   enabled: true

@@ -1,8 +1,10 @@
 package com.example.serviceorder.servicefeign;
 
+import com.example.common.config.log.event.SysLog;
 import com.example.common.exception.BizException;
-import com.example.serviceorder.servicefeign.feignVO.StockReqVO;
-import com.example.serviceorder.servicefeign.feignVO.StockResBO;
+import com.example.serviceorder.servicefeign.ServiceFeign;
+import com.example.serviceorder.servicefeign.stock.feignVO.StockReqVO;
+import com.example.serviceorder.servicefeign.stock.feignVO.StockResBO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
  **/
 @Slf4j
 @Service
-public class StockServiceFeignFallback implements StockServiceFeign{
+public class ServiceFeignFallback implements ServiceFeign {
 
     @Override
     public void addStock(StockReqVO stockReqVO) {
@@ -30,4 +32,9 @@ public class StockServiceFeignFallback implements StockServiceFeign{
         throw new BizException("判断商品是否存在方法,触发服务降级");
     }
 
+    @Override
+    public Boolean saveLog(SysLog sysLog) {
+        log.error("日志服务降级了,sysLog {}", sysLog);
+        return false;
+    }
 }

@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @TableName(value = "orders")
 public class OrderDO {
@@ -21,5 +23,11 @@ public class OrderDO {
 
     @TableField(value = "order_num")
     Integer orderNum;
+
+    @TableField(value = "create_time")
+    Date createTime;
+
+    @TableField(value = "update_time")
+    Date updateTime;
 
 }

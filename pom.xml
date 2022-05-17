@@ -45,6 +45,7 @@
     <modules>
         <module>common</module>
         <module>gateway</module>
+        <module>service-log</module>
         <module>service-order</module>
         <module>service-stock</module>
     </modules>

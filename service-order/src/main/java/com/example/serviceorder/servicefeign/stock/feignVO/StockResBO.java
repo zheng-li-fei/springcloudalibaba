@@ -1,4 +1,4 @@
-package com.example.serviceorder.servicefeign.feignVO;
+package com.example.serviceorder.servicefeign.stock.feignVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

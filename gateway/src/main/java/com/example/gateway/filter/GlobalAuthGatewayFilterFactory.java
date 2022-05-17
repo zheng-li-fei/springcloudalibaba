@@ -42,6 +42,8 @@ public class GlobalAuthGatewayFilterFactory implements GlobalFilter {
             String message = JSON.toJSONString(ResEx.error(HttpStatus.UNAUTHORIZED.value(), "authorization authentication failed"));
             DataBuffer buffer = response.bufferFactory().wrap(message.getBytes());
             return response.writeWith(Mono.just(buffer));
+        } else {
+            log.info("请求网关,判断token是否存在: true");
         }
 
         //2.判断token是否合法

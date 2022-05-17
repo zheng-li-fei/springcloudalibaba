@@ -2,6 +2,7 @@ package com.example.serviceorder.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.example.common.config.log.annotation.SysLogAnnotation;
 import com.example.serviceorder.config.GlobalBlockHandler;
 import com.example.serviceorder.controller.vo.OrderReqVO;
 import com.example.serviceorder.service.OrderService;
@@ -30,6 +31,7 @@ public class OrderController {
      * @param orderReqVO
      * @return
      */
+    @SysLogAnnotation(value = "下单 createOrder 日志拦截测试")
     @SentinelResource(value = "createOrder",blockHandler = "blockHandler",blockHandlerClass = GlobalBlockHandler.class)
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
     public boolean createOrder(@RequestBody OrderReqVO orderReqVO) {

@@ -1,5 +1,6 @@
 package com.example.gateway.filter;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.annotation.Order;
@@ -9,8 +10,9 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+@Slf4j
 @Component
-@Order(0)
+@Order(4)
 public class GatewayRequestFilter implements GlobalFilter {
  
     @Override 
@@ -20,10 +22,11 @@ public class GatewayRequestFilter implements GlobalFilter {
         ServerHttpRequest build = exchange.getRequest()
                 .mutate() 
                 .header("CloudConstant.GATEWAY_TOKEN_HEADER", headerValues)
-                .build(); 
- 
+                .build();
+        log.info("请求网关,设置 gateway_token_value {}",headerValues);
+
         ServerWebExchange newExchange = exchange.mutate().request(build).build(); 
-        return chain.filter(newExchange); 
+        return chain.filter(newExchange);
     } 
  
 }
