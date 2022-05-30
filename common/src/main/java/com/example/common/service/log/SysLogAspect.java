@@ -1,8 +1,6 @@
 package com.example.common.service.log;
 
-import com.example.common.config.log.event.MyLogEvent;
-import com.example.common.config.log.event.SysLog;
-import com.example.common.config.log.annotation.SysLogAnnotation;
+import com.example.common.config.log.SysLogAnnotation;
 import com.example.common.enums.LogTypeEnum;
 import com.example.common.utils.SysLogUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +27,7 @@ public class SysLogAspect {
     @Autowired
     SysLogPublisher sysLogPublisher;
 
-    @Pointcut(value = "@annotation(com.example.common.config.log.annotation.SysLogAnnotation)")
+    @Pointcut(value = "@annotation(com.example.common.config.log.SysLogAnnotation)")
     public void Pointcut() {
     }
 
@@ -59,8 +57,10 @@ public class SysLogAspect {
         //2.方法执行******************
         Long startTime = System.currentTimeMillis();
         try {
+            log.info("进入日志切面");
             proceed = point.proceed();
         } catch (Exception e) {
+            log.error("日志切面捕获错误,e {}", e);
             logVo.setType(LogTypeEnum.ERROR.getType());
             logVo.setException(e.getMessage());
             throw e;
@@ -68,7 +68,8 @@ public class SysLogAspect {
             Long endTime = System.currentTimeMillis();
             logVo.setTime(endTime - startTime);
             //发送异步日志事件
-            sysLogPublisher.publishEvent(new MyLogEvent(logVo));
+            log.info("进入日志切面，发送日志事件");
+            sysLogPublisher.publishEvent(new SysLogEvent(logVo));
         }
 
         //3.后置环绕通知开始执行******************

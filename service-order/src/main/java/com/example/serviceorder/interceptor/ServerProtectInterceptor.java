@@ -1,9 +1,9 @@
 package com.example.serviceorder.interceptor;
 
-import cn.hutool.core.util.CharsetUtil;
 import com.alibaba.fastjson.JSON;
 import com.example.common.response.ResEx;
 import com.example.serviceorder.config.CloudSecurityProperties;
+import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Base64Utils;
@@ -20,6 +20,8 @@ public class ServerProtectInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
+
+        log.info("全局事务xid:{}", RootContext.getXID());
 
         if (!properties.getOnlyFetchByGateway()) {
             return true;

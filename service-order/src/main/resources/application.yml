@@ -29,7 +29,20 @@ spring:
         dashboard: 192.168.181.131:8858
       eager: true #是否饥饿加载。默认为 false 关闭
 
-
+feign:
+  httpclient:
+    enabled: true
+    max-connections: 500
+    max-connections-per-route: 50
+  compression:
+    request:
+      #请求压缩
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      #响应压缩
+      enabled: true
 
 mybatis-plus:
   mapper-locations: classpath:mappers/*.xml

@@ -2,7 +2,7 @@ package com.example.serviceorder.controller;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.example.common.config.log.annotation.SysLogAnnotation;
+import com.example.common.config.log.SysLogAnnotation;
 import com.example.serviceorder.config.GlobalBlockHandler;
 import com.example.serviceorder.controller.vo.OrderReqVO;
 import com.example.serviceorder.service.OrderService;

@@ -1,12 +1,12 @@
 package com.example.servicestock.servicefeign.log;
 
-import com.example.common.config.log.event.SysLog;
+import com.example.common.service.log.SysLog;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class RemoteLogServiceFeignFallback implements RemoteLogServiceFeign {
+public class RemoteServiceFeignFallback implements RemoteServiceFeign {
 
     @Override
     public Boolean saveLog(SysLog sysLog) {

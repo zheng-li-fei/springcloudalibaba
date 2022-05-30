@@ -1,4 +1,4 @@
-package com.example.common.config.log.event;
+package com.example.common.service.log;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

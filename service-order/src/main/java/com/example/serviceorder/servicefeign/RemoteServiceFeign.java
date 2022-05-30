@@ -1,6 +1,6 @@
 package com.example.serviceorder.servicefeign;
 
-import com.example.common.config.log.event.SysLog;
+import com.example.common.service.log.SysLog;
 import com.example.serviceorder.config.OpenFeignConfig;
 import com.example.serviceorder.servicefeign.stock.feignVO.StockReqVO;
 import com.example.serviceorder.servicefeign.stock.feignVO.StockResBO;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
  * <p>
  * name:指定调用rest接口所对应的服务名 (相同服务名只能存在一个接口)
  **/
-@FeignClient(value = "gateway", fallback = ServiceFeignFallback.class, configuration = OpenFeignConfig.class)
-public interface ServiceFeign {
+@FeignClient(value = "gateway", fallback = RemoteServiceFeignFallback.class, configuration = OpenFeignConfig.class)
+public interface RemoteServiceFeign {
 
     /********************库存服务********************/
     /**
@@ -48,7 +48,7 @@ public interface ServiceFeign {
      * @param sysLog 日志实体
      * @return succes、false
      */
-    @PostMapping(value = "/service-log/saveLog", headers = {"Content-Type=application/json;charset=UTF-8"})
+    @PostMapping(value = "/service-log/saveLog")
     Boolean saveLog(@RequestBody SysLog sysLog);
 
 }

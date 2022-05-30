@@ -1,8 +1,7 @@
 package com.example.serviceorder.servicefeign;
 
-import com.example.common.config.log.event.SysLog;
+import com.example.common.service.log.SysLog;
 import com.example.common.exception.BizException;
-import com.example.serviceorder.servicefeign.ServiceFeign;
 import com.example.serviceorder.servicefeign.stock.feignVO.StockReqVO;
 import com.example.serviceorder.servicefeign.stock.feignVO.StockResBO;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
  **/
 @Slf4j
 @Service
-public class ServiceFeignFallback implements ServiceFeign {
+public class RemoteServiceFeignFallback implements RemoteServiceFeign {
 
     @Override
     public void addStock(StockReqVO stockReqVO) {

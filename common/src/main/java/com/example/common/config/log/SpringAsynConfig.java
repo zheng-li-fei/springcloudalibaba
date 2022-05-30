@@ -9,7 +9,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 
 /**
- * @description:
+ * @description: 异步消息配置
  * @author: zhenglifei
  * @create: 2022/5/16 11:03
  **/

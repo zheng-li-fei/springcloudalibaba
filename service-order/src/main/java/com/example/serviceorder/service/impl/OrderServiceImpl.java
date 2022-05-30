@@ -4,7 +4,7 @@ import com.example.common.exception.BizException;
 import com.example.serviceorder.mapper.OrderDao;
 import com.example.serviceorder.service.OrderService;
 import com.example.serviceorder.service.bo.OrderReqBO;
-import com.example.serviceorder.servicefeign.ServiceFeign;
+import com.example.serviceorder.servicefeign.RemoteServiceFeign;
 import com.example.serviceorder.servicefeign.stock.feignVO.StockReqVO;
 import com.example.serviceorder.servicefeign.stock.feignVO.StockResBO;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -28,18 +28,18 @@ public class OrderServiceImpl implements OrderService {
     OrderDao orderDao;
 
     @Resource
-    ServiceFeign serviceFeign;
+    RemoteServiceFeign remoteServiceFeign;
 
 
     @Override
-    @GlobalTransactional(rollbackFor = Exception.class)
+    @GlobalTransactional(rollbackFor = Throwable.class)
     public boolean createOrder(OrderReqBO orderReqBO) {
         if (orderReqBO == null || StringUtils.isBlank(orderReqBO.getGoodsName()) || orderReqBO.getOrderNum() == null) {
             throw new BizException("订单参数错误");
         }
 
         //1.判断商品是否存在
-        StockResBO stockResBO = serviceFeign.existGoods(orderReqBO.getGoodsId());
+        StockResBO stockResBO = remoteServiceFeign.existGoods(orderReqBO.getGoodsId());
         if (stockResBO == null || StringUtils.isBlank(stockResBO.getGoodsId())) {
             throw new BizException("商品不存在");
         }
@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
         StockReqVO stockReqVO = StockReqVO.builder().build();
         stockReqVO.setGoodsId(orderReqBO.getGoodsId());
         stockReqVO.setOperatorStockNum(orderReqBO.getOrderNum());
-        serviceFeign.reduceStock(stockReqVO);
+        remoteServiceFeign.reduceStock(stockReqVO);
 
         //3.下单
          orderDao.insert(orderReqBO) ;

@@ -1,0 +1,5 @@
+#-------starter自动装配---------
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.example.common.config.log.SpringAsynConfig,\
+  com.example.common.service.log.SysLogAspect,\
+  com.example.common.service.log.SysLogPublisher

@@ -6,7 +6,8 @@ spring:
       enabled: true
       discovery:
         locator:
-          enabled: true   #开启从注册中心动态创建路由的功能，利用微服务名称进行路由
+          #开启从注册中心动态创建路由的功能，利用微服务名称进行路由
+          enabled: true
       #允许跨域访问
       globalcors:
         cors-configurations:
@@ -33,6 +34,17 @@ spring:
           filters:
             #转发之前去掉第一层路由
             - StripPrefix=1
+            #请求重试
+            - name: Retry
+              args:
+                #重试次数
+                retries: 3
+                #需要重试的错误(5xx)
+                series: SERVER_ERROR
+                #成功的请求状态码
+                statuses: OK
+                #需要重试的方法
+                methods: GET
 
         #库存路由
         - id: route-service-stock
@@ -42,6 +54,12 @@ spring:
             - Method=GET,POST
           filters:
             - StripPrefix=1
+            - name: Retry
+              args:
+                retries: 3
+                series: SERVER_ERROR
+                statuses: OK
+                methods: GET
 
         #日志服务
         - id: route-service-log

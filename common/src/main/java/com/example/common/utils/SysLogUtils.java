@@ -1,6 +1,6 @@
 package com.example.common.utils;
 
-import com.example.common.config.log.event.SysLog;
+import com.example.common.service.log.SysLog;
 import com.example.common.enums.LogTypeEnum;
 import lombok.experimental.UtilityClass;
 

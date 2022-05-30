@@ -1,5 +1,6 @@
 package com.example.gateway.filter;
 
+import io.seata.core.context.RootContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -24,6 +25,8 @@ public class GatewayRequestFilter implements GlobalFilter {
                 .header("CloudConstant.GATEWAY_TOKEN_HEADER", headerValues)
                 .build();
         log.info("请求网关,设置 gateway_token_value {}",headerValues);
+
+        log.info("全局事务xid:{}", RootContext.getXID());
 
         ServerWebExchange newExchange = exchange.mutate().request(build).build(); 
         return chain.filter(newExchange);

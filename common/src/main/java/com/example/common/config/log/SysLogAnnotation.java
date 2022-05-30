@@ -1,4 +1,4 @@
-package com.example.common.config.log.annotation;
+package com.example.common.config.log;
 
 import java.lang.annotation.*;
 
