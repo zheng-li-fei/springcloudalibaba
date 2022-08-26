@@ -1,4 +1,16 @@
 
+Build
+Root POM:
+pom.xml
+
+
+Goals and options:
+-pl service-order -am clean install -Pprod -Dmaven.test.skip=true
+
+
+
+=================Run only if build succeeds=====================================
+
 service_name=springcloudalibaba
 project_name=service-stock
 tag=latest
