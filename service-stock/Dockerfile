@@ -1,5 +1,7 @@
 FROM frolvlad/alpine-java:jdk8.202.08-slim
 
+COPY --from=hengyunabc/arthas:latest /opt/arthas /opt/arthas
+
 LABEL author=zlf
 LABEL description=库存
 LABEL version=1.0

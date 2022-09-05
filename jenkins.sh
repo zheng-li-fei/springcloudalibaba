@@ -4,7 +4,8 @@ Root POM:
 pom.xml
 
 
-Goals and options:
+
+# Goals and options: 构建单独模块 mvn clean package -pl ${projectName} -am -P dev -Dmaven.test.skip=true
 -pl service-order -am clean install -Pprod -Dmaven.test.skip=true
 
 

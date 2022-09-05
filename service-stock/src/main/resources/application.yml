@@ -1,6 +1,10 @@
 server:
   port: 8886
+  shutdown: graceful #优雅关机
+
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 20s #优雅关机时间
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -28,6 +32,7 @@ spring:
         port: 8719
         dashboard: 192.168.181.131:8858
       eager: true #是否饥饿加载。默认为 false 关闭
+
 
 
 mybatis-plus:
