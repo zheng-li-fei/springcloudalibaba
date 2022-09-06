@@ -17,3 +17,8 @@ spring:
         file-extension: yml
       discovery:
         server-addr: ${nacos.address}:${nacos.port}
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+server:
+  shutdown: graceful
