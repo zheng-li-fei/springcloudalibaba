@@ -4,7 +4,7 @@ server:
 
 spring:
   lifecycle:
-    timeout-per-shutdown-phase: 30
+    timeout-per-shutdown-phase: 30s
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
