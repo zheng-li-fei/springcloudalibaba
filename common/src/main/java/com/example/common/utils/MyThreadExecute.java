@@ -2,6 +2,7 @@ package com.example.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 线程任务执行器
  */
 @Slf4j
+@Component
 public class MyThreadExecute {
     /**
      * 任务队列
@@ -31,7 +33,6 @@ public class MyThreadExecute {
             taskQueue,
             new ThreadFactory() {
                 private final AtomicInteger atomicInteger = new AtomicInteger(0);
-
                 @Override
                 public Thread newThread(Runnable r) {
                     String name = String.format("javaShop-pool-%s", atomicInteger.getAndDecrement());
