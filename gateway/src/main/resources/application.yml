@@ -1,6 +1,10 @@
 server:
   port: 8884
+  shutdown: graceful
+
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
   cloud:
     gateway:
       enabled: true
@@ -69,6 +73,7 @@ spring:
             - Method=GET,POST
           filters:
             - StripPrefix=1
+
 
 #配置seata的注册中心
 seata:
