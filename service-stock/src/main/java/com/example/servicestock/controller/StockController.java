@@ -23,6 +23,18 @@ public class StockController {
     @Autowired
     StockService stockService;
 
+    @RestController
+    public class DemoController {
+        @GetMapping("/demo")
+        public String demo() throws InterruptedException {
+            //模拟业务耗时处理流程
+            log.info("开始模拟线程执行");
+            Thread.sleep(12 * 1000L);
+            log.info("结束模拟线程执行");
+            return "hello";
+        }
+    }
+
     @SentinelResource(value = "addStock",blockHandler = "blockHandler",blockHandlerClass = GlobalBlockHandler.class)
     @RequestMapping(value = "/stock/addStock", method = RequestMethod.POST)
     public void addStock(@RequestBody StockReqVO stockReqVO) {

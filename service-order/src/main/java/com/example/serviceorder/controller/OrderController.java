@@ -9,10 +9,7 @@ import com.example.serviceorder.service.OrderService;
 import com.example.serviceorder.service.bo.OrderReqBO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @description:
@@ -26,13 +23,26 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+    @RestController
+    public class DemoController {
+        @GetMapping("/demo")
+        public String demo() throws InterruptedException {
+            //模拟业务耗时处理流程
+            log.info("开始模拟线程执行");
+            Thread.sleep(12 * 1000L);
+            log.info("结束模拟线程执行");
+            return "hello";
+        }
+    }
+
     /**
-     * 下单 
+     * 下单
+     *
      * @param orderReqVO
      * @return
      */
     @SysLogAnnotation(value = "下单 createOrder 日志拦截测试")
-    @SentinelResource(value = "createOrder",blockHandler = "blockHandler",blockHandlerClass = GlobalBlockHandler.class)
+    @SentinelResource(value = "createOrder", blockHandler = "blockHandler", blockHandlerClass = GlobalBlockHandler.class)
     @RequestMapping(value = "/order/createOrder", method = RequestMethod.POST)
     public boolean createOrder(@RequestBody OrderReqVO orderReqVO) {
         //全局事务注解？？？
