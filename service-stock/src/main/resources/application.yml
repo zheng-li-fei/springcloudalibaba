@@ -1,10 +1,10 @@
 server:
   port: 8886
-  shutdown: graceful #优雅关机
+  shutdown: graceful
 
 spring:
   lifecycle:
-    timeout-per-shutdown-phase: 20s #优雅关机时间
+    timeout-per-shutdown-phase: 30
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
