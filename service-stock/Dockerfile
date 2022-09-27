@@ -17,5 +17,4 @@ EXPOSE 8886 8886
 
 ENV JVM_PARAM_INNER=${JVM_PARAM}
 ENV JAVA_PARAM_INNER=${JAVA_PARAM}
-#ENTRYPOINT java ${JVM_PARAM_INNER} -jar /service-stock/app.jar ${JAVA_PARAM_INNER}
-ENTRYPOINT [ "sh", "-c", "exec java $JVM_PARAM_INNER -jar /service-stock/app.jar $JAVA_PARAM_INNER" ]
+ENTRYPOINT java ${JVM_PARAM_INNER} -jar /service-stock/app.jar ${JAVA_PARAM_INNER}

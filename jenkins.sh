@@ -21,8 +21,10 @@ echo '当前执行路径:' $(pwd) '当前用户组:' $(groups)
 #查询容器是否存在，存在则删除
 containerId=`docker ps -a | grep -w ${project_name}:${tag}  | awk '{print $1}'`
 if [ "$containerId" !=  "" ] ; then
-    docker rm -f $containerId
-	echo "停止并删除容器服务"
+  docker stop $containerId
+	echo "停止容器服务"
+  docker rm -f $containerId
+	echo "删除容器服务"
 else
 	echo "没有容器服务"
 fi
