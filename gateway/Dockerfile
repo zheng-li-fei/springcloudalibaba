@@ -1,4 +1,4 @@
-#替换成自带skywalking的jdk,配置SW_AGENT_NAME 和 SW_AGENT_COLLECTOR_BACKEND_SERVICES 环境变量
+#替换成自带skywalking的jdk,配置 SW_AGENT_NAME 和 SW_AGENT_COLLECTOR_BACKEND_SERVICES 环境变量
 FROM apache/skywalking-java-agent:8.7.0-jdk8
 
 LABEL author=zlf

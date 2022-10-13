@@ -14,7 +14,7 @@ services:
     #启动的容器名称
     container_name: mysql
     privileged: true
-    restart: on-failure:5
+    restart: on-failure:2
     #挂载
     volumes:
       - /home/zlf/docker_data/mysql/datadir:/var/lib/mysql
@@ -71,7 +71,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.5.1
     container_name: elasticsearch
     privileged: true
-    restart: on-failure:5
+    restart: on-failure:2
     volumes:
       - /home/zlf/docker_data/elasticsearch/logs:/usr/share/elasticsearch/logs
       - /home/zlf/docker_data/elasticsearch/data:/usr/share/elasticsearch/data
@@ -92,7 +92,7 @@ services:
     image: bladex/sentinel-dashboard
     container_name: sentinel-dashboard
     privileged: true
-    restart: on-failure:5
+    restart: on-failure:2
     environment:
       TZ: Asia/Shanghai
     ports:
@@ -107,7 +107,7 @@ services:
     image: nacos/nacos-server:2.0.3
     container_name: nacos
     privileged: true
-    restart: on-failure:5
+    restart: on-failure:2
     volumes:
       - /home/zlf/docker_data/nacos/conf/application.properties:/home/nacos/conf/application.properties
       - /home/zlf/docker_data/nacos/logs:/home/nacos/logs
@@ -115,6 +115,13 @@ services:
     environment:
       TZ: Asia/Shanghai
       MODE: standalone
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_DATABASE_NUM: 1
+      MYSQL_SERVICE_HOST: 192.168.3.198
+      MYSQL_SERVICE_PORT: 3306
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: 123456
+      MYSQL_SERVICE_DB_NAME: nacos
     ports:
       - 8848:8848
       - 9848:9848
@@ -129,7 +136,7 @@ services:
     image: docker.io/seataio/seata-server:1.3.0
     container_name: seata
     privileged: true
-    restart: on-failure:5
+    restart: on-failure:2
     volumes:
       - /home/zlf/docker_data/seata/config/file.conf:/seata-server/resources/file.conf
       - /home/zlf/docker_data/seata/config/registry.conf:/seata-server/resources/registry.conf
@@ -148,17 +155,20 @@ services:
         limits:
           memory: 368m
 
+  #链路追踪
   skywalking-oap:
     image: apache/skywalking-oap-server:8.7.0-es7
     container_name: skywalking-oap
     privileged: true
-    restart: on-failure:5
+    restart: on-failure:2
     volumes:
       - /home/zlf/docker_data/skywalking/skywalking-oap/config/application.yml:/skywalking/config/application.yml
     #network_mode: host
     environment:
       SW_STORAGE: elasticsearch7  # 指定ES
       SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
+      #SW_ES_USER: elastic
+      #SW_ES_USER_PASSWORD: wshoto@2020
       TZ: Asia/Shanghai
     #使用别名时需要使用links
     links:
@@ -177,7 +187,7 @@ services:
     image: apache/skywalking-ui:8.7.0
     container_name: skywalking-ui
     privileged: true
-    restart: on-failure:5
+    restart: on-failure:2
     #network_mode: host
     environment:
       SW_OAP_ADDRESS: http://skywalking-oap:12800
@@ -198,7 +208,7 @@ services:
     container_name: jenkins
     privileged: true
     user: root
-    restart: on-failure:5
+    restart: on-failure:2
     volumes:
       - /home/zlf/docker_data/jenkins:/var/jenkins_home
       #jenkins容器需要实例化其他Docker容器，则该守护进程是必需的
