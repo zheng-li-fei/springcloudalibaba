@@ -7,9 +7,10 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.12.RELEASE</version>
+        <relativePath/>
     </parent>
 
-    <groupId>com.example</groupId>
+    <groupId>com.yiqitong</groupId>
     <artifactId>springcloudalibaba</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springcloudalibaba</name>
@@ -22,6 +23,14 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.test.skip>true</maven.test.skip>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
+        <maven-war-plugin.version>3.3.1</maven-war-plugin.version>
 
         <!-- SpringBoot版本 -->
         <spring.boot.version>2.3.12.RELEASE</spring.boot.version>
@@ -29,75 +38,53 @@
         <spring.cloud.alibaba>2.2.7.RELEASE</spring.cloud.alibaba>
         <!-- Spring Cloud 版本 -->
         <spring.cloud>Hoxton.SR12</spring.cloud>
+        <!--公共依赖版本-->
+        <common-base.version>0.0.1-SNAPSHOT</common-base.version>
+        <common-yiqitong-base-spring-boot-starter.version>0.0.1-SNAPSHOT</common-yiqitong-base-spring-boot-starter.version>
+        <common-api-core.version>0.0.1-SNAPSHOT</common-api-core.version>
+        <common-api-order.version>0.0.1-SNAPSHOT</common-api-order.version>
+        <common-api-stock.version>0.0.1-SNAPSHOT</common-api-stock.version>
+
+        <!--原有工具类 版本-->
+        <yiqitong-base-spring-boot-starter.version>2.7.2-SNAPSHOT</yiqitong-base-spring-boot-starter.version>
+
+        <feign-httpclient.version>10.1.0</feign-httpclient.version>
 
         <swagger.version>2.7.0</swagger.version>
+        <alibaba-fastjson.version>1.2.83</alibaba-fastjson.version>
+        <hutool.version>5.7.20</hutool.version>
+        <lombok.version>1.18.12</lombok.version>
 
-        <hutool.version>5.6.2</hutool.version>
         <mybatis-plus.version>3.4.2</mybatis-plus.version>
         <mysql.version>8.0.23</mysql.version>
         <druid.version>1.2.6</druid.version>
         <redission.version>3.10.6</redission.version>
-        <alibaba-fastjson.version>1.2.83</alibaba-fastjson.version>
+
         <skywalking.logback.version>8.8.0</skywalking.logback.version>
+
     </properties>
 
     <modules>
-        <module>common</module>
+        <!--通用工具-->
+        <module>commons</module>
+        <!--网关-->
         <module>gateway</module>
-        <module>service-log</module>
-        <module>service-order</module>
-        <module>service-stock</module>
+        <!--三方api服务-->
+        <module>server-api</module>
+        <!--认证中心-->
+        <module>server-auth</module>
+        <!--消息服务-->
+        <module>server-mq</module>
+        <!--支付中心-->
+        <module>server-pay</module>
+        <!--任务模块-->
+        <module>server-task</module>
+
+        <!--测试订单-->
+        <module>server-order</module>
+        <!--测试库存-->
+        <module>server-stock</module>
     </modules>
-
-    <dependencies>
-        <!-- SpringBoot基本场景启动依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-
-        <!-- nacos 服务注册发现（客户端）依赖 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!-- nacos-config 配置中心依赖 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <!-- seata 分布式事务依赖 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-        </dependency>
-
-        <!--限流 降级-->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-datasource-nacos</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.csp</groupId>
-            <artifactId>sentinel-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.skywalking</groupId>
-            <artifactId>apm-toolkit-logback-1.x</artifactId>
-            <version>${skywalking.logback.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-    </dependencies>
 
     <!-- 版本依赖管理器 -->
     <dependencyManagement>
@@ -128,8 +115,44 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!--自带模块依赖版本管理-->
+            <dependency>
+                <groupId>com.yiqitong</groupId>
+                <artifactId>common-base</artifactId>
+                <version>${common-base.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yiqitong</groupId>
+                <artifactId>common-yiqitong-base-spring-boot-starter</artifactId>
+                <version>${common-yiqitong-base-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yiqitong</groupId>
+                <artifactId>common-api-core</artifactId>
+                <version>${common-api-core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yiqitong.api</groupId>
+                <artifactId>common-api-order</artifactId>
+                <version>${common-api-order.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.yiqitong.api</groupId>
+                <artifactId>common-api-stock</artifactId>
+                <version>${common-api-stock.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.skywalking</groupId>-->
+        <!--            <artifactId>apm-toolkit-logback-1.x</artifactId>-->
+        <!--            <version>${skywalking.logback.version}</version>-->
+        <!--        </dependency>-->
+    </dependencies>
 
     <profiles>
         <profile>
