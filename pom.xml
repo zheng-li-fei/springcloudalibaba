@@ -10,7 +10,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.yiqitong</groupId>
+    <groupId>com.zlf</groupId>
     <artifactId>springcloudalibaba</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springcloudalibaba</name>
@@ -118,27 +118,23 @@
 
             <!--自带模块依赖版本管理-->
             <dependency>
-                <groupId>com.yiqitong</groupId>
+                <groupId>com.zlf</groupId>
                 <artifactId>common-base</artifactId>
                 <version>${common-base.version}</version>
             </dependency>
+
             <dependency>
-                <groupId>com.yiqitong</groupId>
-                <artifactId>common-yiqitong-base-spring-boot-starter</artifactId>
-                <version>${common-yiqitong-base-spring-boot-starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.yiqitong</groupId>
+                <groupId>com.zlf</groupId>
                 <artifactId>common-api-core</artifactId>
                 <version>${common-api-core.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.yiqitong.api</groupId>
+                <groupId>com.zlf.api</groupId>
                 <artifactId>common-api-order</artifactId>
                 <version>${common-api-order.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.yiqitong.api</groupId>
+                <groupId>com.zlf.api</groupId>
                 <artifactId>common-api-stock</artifactId>
                 <version>${common-api-stock.version}</version>
             </dependency>

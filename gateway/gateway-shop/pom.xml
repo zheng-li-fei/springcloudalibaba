@@ -4,12 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.yiqitong</groupId>
+        <groupId>com.zlf</groupId>
         <artifactId>gateway</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.yiqitong</groupId>
+    <groupId>com.zlf</groupId>
     <artifactId>gateway-shop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>gateway-shop</name>
@@ -17,27 +17,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.yiqitong</groupId>
+            <groupId>com.zlf</groupId>
             <artifactId>common-base</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.yiqitong</groupId>
-            <artifactId>common-yiqitong-base-spring-boot-starter</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hutool-all</artifactId>
-                    <groupId>cn.hutool</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>mybatis-plus-boot-starter</artifactId>
-                    <groupId>com.baomidou</groupId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- gateway 网关依赖 -->

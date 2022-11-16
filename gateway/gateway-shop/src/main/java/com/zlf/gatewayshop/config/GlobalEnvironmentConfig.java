@@ -1,4 +1,4 @@
-package com.yiqitong.gatewayshop.config;
+package com.zlf.gatewayshop.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
