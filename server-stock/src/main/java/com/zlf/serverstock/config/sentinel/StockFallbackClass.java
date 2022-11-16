@@ -1,7 +1,7 @@
 package com.zlf.serverstock.config.sentinel;
 
 import com.zlf.api.commonapistock.bo.StockReqBO;
-import com.zlf.baseproject.exception.BizException;
+import com.zlf.commonbase.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
 /**

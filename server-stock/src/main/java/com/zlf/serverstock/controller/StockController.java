@@ -7,6 +7,7 @@ import com.zlf.api.commonapistock.bo.StockResBO;
 import com.zlf.api.commonapistock.feign.StockFeignClient;
 import com.zlf.api.commonapistock.vo.StockReqVO;
 
+import com.zlf.commonbase.utils.ResEx;
 import com.zlf.serverstock.service.StockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

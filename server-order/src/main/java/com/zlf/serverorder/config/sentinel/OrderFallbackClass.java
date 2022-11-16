@@ -1,7 +1,7 @@
 package com.zlf.serverorder.config.sentinel;
 
 import com.zlf.api.commonapiorder.vo.OrderReqVO;
-import com.zlf.baseproject.exception.BizException;
+import com.zlf.commonbase.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
 /**

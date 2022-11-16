@@ -10,7 +10,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.zlf.baseproject.config.mvcLog.MVCLogInterceptor;
+import com.zlf.commonapicore.config.MVCLogInterceptor;
 import com.zlf.serverorder.config.interceptor.AuthorizationInterceptor;
 import com.zlf.serverorder.config.interceptor.ServerProtectInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,8 @@
 package com.zlf.serverstock.config;
 
-
-import com.zlf.baseproject.entity.ResponseEx;
-import com.zlf.baseproject.exception.BizDataException;
-import com.zlf.baseproject.exception.BizException;
+import com.zlf.commonbase.exception.BizDataException;
+import com.zlf.commonbase.exception.BizException;
+import com.zlf.commonbase.utils.ResEx;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;

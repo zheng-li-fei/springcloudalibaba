@@ -6,7 +6,7 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.zlf.api.commonapistock.bo.StockReqBO;
 import com.zlf.api.commonapistock.bo.StockResBO;
-import com.zlf.baseproject.exception.BizException;
+import com.zlf.commonbase.exception.BizException;
 import com.zlf.serverstock.config.sentinel.StockBlockHandler;
 import com.zlf.serverstock.config.sentinel.StockFallbackClass;
 import com.zlf.serverstock.dao.StockDao;

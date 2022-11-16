@@ -4,9 +4,10 @@ import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.fastjson.JSONObject;
 import com.zlf.api.commonapistock.bo.StockResBO;
 
-import com.zlf.baseproject.exception.BizException;
 import com.zlf.api.commonapistock.feign.StockFeignClient;
 import com.zlf.api.commonapistock.vo.StockReqVO;
+import com.zlf.commonbase.exception.BizException;
+import com.zlf.commonbase.utils.ResEx;
 import com.zlf.serverorder.config.sentinel.OrderBlockHandler;
 import com.zlf.serverorder.config.sentinel.OrderFallbackClass;
 import com.zlf.serverorder.dao.OrderDao;

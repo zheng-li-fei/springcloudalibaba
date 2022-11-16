@@ -69,16 +69,12 @@
         <module>commons</module>
         <!--网关-->
         <module>gateway</module>
-        <!--三方api服务-->
-        <module>server-api</module>
         <!--认证中心-->
         <module>server-auth</module>
         <!--消息服务-->
         <module>server-mq</module>
         <!--支付中心-->
         <module>server-pay</module>
-        <!--任务模块-->
-        <module>server-task</module>
 
         <!--测试订单-->
         <module>server-order</module>
