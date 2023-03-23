@@ -40,13 +40,9 @@
         <spring.cloud>Hoxton.SR12</spring.cloud>
         <!--公共依赖版本-->
         <common-base.version>0.0.1-SNAPSHOT</common-base.version>
-        <common-yiqitong-base-spring-boot-starter.version>0.0.1-SNAPSHOT</common-yiqitong-base-spring-boot-starter.version>
         <common-api-core.version>0.0.1-SNAPSHOT</common-api-core.version>
         <common-api-order.version>0.0.1-SNAPSHOT</common-api-order.version>
         <common-api-stock.version>0.0.1-SNAPSHOT</common-api-stock.version>
-
-        <!--原有工具类 版本-->
-        <yiqitong-base-spring-boot-starter.version>2.7.2-SNAPSHOT</yiqitong-base-spring-boot-starter.version>
 
         <feign-httpclient.version>10.1.0</feign-httpclient.version>
 
