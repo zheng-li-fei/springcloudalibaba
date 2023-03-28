@@ -43,6 +43,7 @@
         <common-api-core.version>0.0.1-SNAPSHOT</common-api-core.version>
         <common-api-order.version>0.0.1-SNAPSHOT</common-api-order.version>
         <common-api-stock.version>0.0.1-SNAPSHOT</common-api-stock.version>
+        <common-api-auth.version>0.0.1-SNAPSHOT</common-api-auth.version>
 
         <feign-httpclient.version>10.1.0</feign-httpclient.version>
 
@@ -122,6 +123,11 @@
             </dependency>
             <dependency>
                 <groupId>com.zlf.api</groupId>
+                <artifactId>common-api-auth</artifactId>
+                <version>${common-api-auth.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zlf.api</groupId>
                 <artifactId>common-api-order</artifactId>
                 <version>${common-api-order.version}</version>
             </dependency>
@@ -130,6 +136,7 @@
                 <artifactId>common-api-stock</artifactId>
                 <version>${common-api-stock.version}</version>
             </dependency>
+
 
         </dependencies>
     </dependencyManagement>
