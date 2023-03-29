@@ -40,6 +40,7 @@
         <spring.cloud>Hoxton.SR12</spring.cloud>
         <!--公共依赖版本-->
         <common-base.version>0.0.1-SNAPSHOT</common-base.version>
+        <common-redis.version>0.0.1-SNAPSHOT</common-redis.version>
         <common-api-core.version>0.0.1-SNAPSHOT</common-api-core.version>
         <common-api-order.version>0.0.1-SNAPSHOT</common-api-order.version>
         <common-api-stock.version>0.0.1-SNAPSHOT</common-api-stock.version>
@@ -114,6 +115,11 @@
                 <groupId>com.zlf</groupId>
                 <artifactId>common-base</artifactId>
                 <version>${common-base.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zlf</groupId>
+                <artifactId>common-redis</artifactId>
+                <version>${common-redis.version}</version>
             </dependency>
 
             <dependency>

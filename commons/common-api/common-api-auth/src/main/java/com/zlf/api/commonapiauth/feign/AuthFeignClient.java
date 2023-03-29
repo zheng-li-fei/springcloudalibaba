@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author: zhenglifei
  * @create: 2022/11/9 17:06
  **/
-@FeignClient(value = ServiceNameConstants.SERVER_STOCK, fallbackFactory = AuthServiceFeignFallbackFactory.class, configuration = OpenFeignConfig.class)
+@FeignClient(value = ServiceNameConstants.SERVER_AUTH, fallbackFactory = AuthServiceFeignFallbackFactory.class, configuration = OpenFeignConfig.class)
 public interface AuthFeignClient {
 
     /**
