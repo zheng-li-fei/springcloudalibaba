@@ -66,7 +66,9 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         // 设置是否需要通过网关访问
         registry.addInterceptor(serverProtectInterceptor).addPathPatterns("/**");
         registry.addInterceptor(authorizationInterceptor).addPathPatterns("/**").excludePathPatterns(
-                "/error"
+                "/error",
+                "/auth/register",
+                "/auth/login"
         );
     }
 

@@ -20,7 +20,7 @@ public class ServerProtectInterceptor implements HandlerInterceptor {
         if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
             response.setHeader("Access-Control-Max-Age", "1800");
             response.setStatus(HttpStatus.NO_CONTENT.value());
-            return false; // 跳出拦截调用链
+            return false;
         }
         return true;
     }

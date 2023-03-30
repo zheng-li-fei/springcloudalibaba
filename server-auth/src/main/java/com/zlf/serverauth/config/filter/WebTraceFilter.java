@@ -31,8 +31,7 @@ public class WebTraceFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws IOException, ServletException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         try {
             String traceId = request.getHeader(MDCTraceUtils.TRACE_ID_HEADER);
             String spanId = request.getHeader(MDCTraceUtils.SPAN_ID_HEADER);

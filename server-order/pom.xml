@@ -17,20 +17,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.zlf</groupId>
-            <artifactId>common-base</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.zlf.api</groupId>
-            <artifactId>common-api-order</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.zlf.api</groupId>
-            <artifactId>common-api-stock</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
@@ -46,34 +32,28 @@
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
 
-        <!-- mysql驱动 -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.version}</version>
+            <groupId>com.zlf</groupId>
+            <artifactId>common-base</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>com.zlf</groupId>
+            <artifactId>common-redis</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>${redission.version}</version>
+            <groupId>com.zlf</groupId>
+            <artifactId>common-mysql</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid.version}</version>
+            <groupId>com.zlf.api</groupId>
+            <artifactId>common-api-order</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
+            <groupId>com.zlf.api</groupId>
+            <artifactId>common-api-stock</artifactId>
         </dependency>
 
         <!-- nacos 服务注册发现（客户端）依赖 -->
@@ -117,10 +97,10 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <!-- 排除的配置文件-->
-                <excludes>
-                    <exclude>**/application-*.yml</exclude>
-                    <exclude>**/application-*.properties</exclude>
-                </excludes>
+<!--                <excludes>-->
+<!--                    <exclude>**/application-*.yml</exclude>-->
+<!--                    <exclude>**/application-*.properties</exclude>-->
+<!--                </excludes>-->
             </resource>
         </resources>
         <plugins>

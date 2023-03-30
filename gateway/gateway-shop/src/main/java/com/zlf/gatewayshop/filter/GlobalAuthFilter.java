@@ -1,13 +1,10 @@
 package com.zlf.gatewayshop.filter;
 
-import cn.hutool.crypto.SecureUtil;
-import cn.hutool.crypto.digest.HMac;
-import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import com.zlf.commonbase.constant.CommonConstants;
-import com.zlf.commonbase.utils.MDCTraceUtils;
-import com.zlf.commonredis.constants.RedisConstant;
-import com.zlf.gatewayshop.config.GlobalEnvironmentConfig;
+import com.zlf.commonbase.exception.BizException;
+import com.zlf.commonbase.model.AuthUser;
+import com.zlf.commonredis.constants.RedisKeyConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +30,7 @@ import java.util.List;
 public class GlobalAuthFilter implements GlobalFilter, Ordered {
 
     @Autowired
-    RedisTemplate<String,String> redisTemplate;
+    RedisTemplate<String, String> redisTemplate;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -48,34 +45,44 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
         ignoreInterfaceList.add("/auth/register");
         ignoreInterfaceList.add("/auth/login");
         boolean ignore = ignoreInterfaceList.stream().anyMatch(reqPath::contains);
-        if(!ignore){
+        if (!ignore) {
             //2.校验权限,验证token有效性
             String token = exchange.getRequest().getHeaders().getFirst(CommonConstants.AUTHORIZATION);
             //2.1 token不为空且有效
-            if(StringUtils.isBlank(token) || !JWTUtil.verify(token, CommonConstants.HMAC_KEY.getBytes())){
+            if (StringUtils.isBlank(token) || !JWTUtil.verify(token, CommonConstants.HMAC_KEY.getBytes())) {
                 log.error("无效的token访问 {}", token);
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return response.setComplete();
             }
-            String userId = convertToken2UserId(token);
+            //转为用户对象
+            AuthUser authUser = JWTUtil.parseToken(token).getPayloads().toBean(AuthUser.class);
             //2.2 redis中存在token(jwt的token不会自动失效)
-            redisTemplate.hasKey(String.format(RedisConstant.SERVER_AUTH_SHOP_LOGIN_USERID_STR,userId));
+            String redisKey = String.format(RedisKeyConstant.SERVER_AUTH_SHOP_LOGIN_USERID_STR, authUser.getUserId());
+            Boolean aBoolean = redisTemplate.hasKey(redisKey);
+            if(aBoolean == null || !aBoolean){
+                //token不存在或已失效
+                log.error("用户登录过期，请重新登录");
+                throw new BizException("用户登录过期，请重新登录");
+            }
+            //2.3 redis缓存中的token和当前token一致
+            String tokenValue = redisTemplate.opsForValue().get(redisKey);
+            if(!StringUtils.equals(token,tokenValue)){
+                //当前token已失效
+                log.error("用户登录过期，请重新登录");
+                throw new BizException("用户登录过期，请重新登录");
+            }
         }
-        return chain.filter(exchange);
+        ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(h -> {
+            //添加通过网关校验时间戳,5分钟内有效
+            h.add(CommonConstants.GATEWAY_CHECK_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+        }).build();
+        ServerWebExchange build = exchange.mutate().request(serverHttpRequest).build();
+        return chain.filter(build);
     }
 
     @Override
     public int getOrder() {
         return 1;
-    }
-
-    /**
-     * token 解析为 userId
-     * @param token
-     * @return
-     */
-    public String convertToken2UserId(String token){
-        return "";
     }
 
 }

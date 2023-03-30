@@ -77,12 +77,7 @@ public class OpenFeignConfig {
      */
     private String extractHeaderToken(HttpServletRequest request) {
         //authorization
-        String value = request.getHeader(CommonConstants.AUTHORIZATION);
-        if (StringUtils.isBlank(value)) {
-            //access_token
-            value = request.getParameter(CommonConstants.ACCESS_TOKEN);
-        }
-        return value;
+        return request.getHeader(CommonConstants.AUTHORIZATION);
     }
 
 }

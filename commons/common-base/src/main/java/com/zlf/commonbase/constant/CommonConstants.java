@@ -1,5 +1,7 @@
 package com.zlf.commonbase.constant;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 全局公共常量
  *
@@ -12,11 +14,10 @@ public interface CommonConstants {
      * token请求头名称
      */
     String AUTHORIZATION = "authorization";
-
     /**
-     * The access token issued by the authorization server. This value is REQUIRED.
+     * 通过网关校验时间戳
      */
-    String ACCESS_TOKEN = "access_token";
+    String GATEWAY_CHECK_TIMESTAMP = "gateway_check_timestamp";
 
     String BEARER_TYPE = "Bearer";
 
@@ -24,5 +25,10 @@ public interface CommonConstants {
      * JWTUtil key
      */
     String HMAC_KEY = "51131f501ffe43afb73c81d348d757ca";
+
+    /**
+     * 登录AES加密密码
+     */
+    String LOGIN_AES_KEY = "ptkf4ewzutk0leydzf35ia3gderz2ecs";
 
 }

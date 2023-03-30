@@ -8,7 +8,7 @@
         认证中心:   
             注册:
             登录: 存入redis
-                1) 生成token 
+                1) 生成token (服务之间调用频繁调用redis问题)
                 2) jwt      
                 3) Spring Security
         支付中心:

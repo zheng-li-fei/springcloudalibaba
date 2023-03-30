@@ -1,41 +1,58 @@
 package com.zlf.commonbase.content;
 
 
-import com.zlf.commonbase.model.LoginUser;
-
-import java.util.Objects;
+import com.zlf.commonbase.model.AuthUser;
 
 /**
- * @Desc: 用户上下文
- * @author: yangxingyao
- * @date: 2021/1/25 14:50
- * @warning：本内容仅限于浙江壹企通科技发展有限公司内部传阅，禁止外泄以及用于其他的商业目的
+ * @description: 用户上下文
+ * @author: zhenglifei
+ * @date: 2023/3/30 13:16
  */
 public class UserContext {
-    private static final ThreadLocal<LoginUser> user = new ThreadLocal<>();
 
-    public static LoginUser getLoginUser() {
-        return user.get();
+    private static final ThreadLocal<AuthUser> USERS = new ThreadLocal<>();
+
+    /**
+     * 获取当前登录对象
+     *
+     * @return AuthUser
+     */
+    public static AuthUser getLoginUser() {
+        return USERS.get();
     }
 
-    public static void setLoginUser(LoginUser loginUser) {
-        user.set(loginUser);
+    /**
+     * 设置当前登录对象
+     *
+     * @param user
+     */
+    public static void setLoginUser(AuthUser user) {
+        USERS.set(user);
     }
 
-    public static Long getUserId() {
-        return Objects.isNull(getLoginUser()) ? null : (Objects.isNull(getLoginUser().getUser()) ? null : getLoginUser().getUser().getId());
+    /**
+     * 获取用户id
+     *
+     * @return
+     */
+    public static String getUserId() {
+        return USERS.get().getUserId();
     }
 
-    public static Integer getShopId() {
-        return Objects.isNull(getLoginUser()) ? null : (Objects.isNull(getLoginUser().getUser()) ? null : getLoginUser().getUser().getShop_id().intValue());
+
+    /**
+     * 获取平台类型
+     *
+     * @return Integer
+     */
+    public static Integer getPlatformType() {
+        return USERS.get().getPlatformType();
     }
 
-    public static String getToken() {
-        LoginUser loginUser = getLoginUser();
-        return Objects.isNull(loginUser) ? null : loginUser.getAccess_token();
-    }
-
+    /**
+     * 移除当前登录对象
+     */
     public static void remove() {
-        user.remove();
+        USERS.remove();
     }
 }

@@ -6,10 +6,10 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 
 @Slf4j
-public class RedissonUtils {
+public class RedissionLockUtil {
 
 
-    public static RLock Lock(String key) {
+    public static RLock lock(String key) {
         RedissonClient redissonClient = SpringUtil.getBean(RedissonClient.class);
         RLock rLock = redissonClient.getLock(key);
         rLock.lock();

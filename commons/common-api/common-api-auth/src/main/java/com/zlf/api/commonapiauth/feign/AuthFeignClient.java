@@ -2,14 +2,21 @@ package com.zlf.api.commonapiauth.feign;
 
 
 import com.zlf.api.commonapiauth.feign.fallback.AuthServiceFeignFallbackFactory;
-import com.zlf.api.commonapiauth.vo.AuthReqVO;
+import com.zlf.api.commonapiauth.vo.AuthLoginOutReqVO;
+import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
+import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
+import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
 import com.zlf.commonapicore.config.OpenFeignConfig;
+import com.zlf.commonbase.annotation.ignoretoken.IgnoreTokenAccessAnnotation;
+import com.zlf.commonbase.annotation.ignoretoken.IgnoreTokenTypeEnum;
 import com.zlf.commonbase.constant.ServiceNameConstants;
 import com.zlf.commonbase.utils.ResEx;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @description: 库存服务
@@ -22,25 +29,30 @@ public interface AuthFeignClient {
     /**
      * 注册
      *
-     * @param authReqVO
+     * @param registerReqVO 请求参数
+     * @return ResEx
      */
+    @IgnoreTokenAccessAnnotation(type = IgnoreTokenTypeEnum.SHOP_REGISTER,remark = "商城用户注册")
     @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
-    ResEx<Boolean> authRegister(@RequestBody AuthReqVO authReqVO);
+    ResEx<Boolean> authRegister(@RequestBody AuthRegisterReqVO registerReqVO);
 
     /**
      * 登录
      *
-     * @param authReqVO
+     * @param loginReqVO 请求参数
+     * @return ResEx
      */
+    @IgnoreTokenAccessAnnotation(type = IgnoreTokenTypeEnum.SHOP_LOGIN,remark = "商城用户登录")
     @RequestMapping(value = "/auth/login", method = RequestMethod.POST)
-    ResEx<Boolean> authLogin(@RequestBody AuthReqVO authReqVO);
+    ResEx<AuthLoginResVO> authLogin(HttpServletRequest request, @RequestBody AuthLoginReqVO loginReqVO);
 
     /**
      * 退出
      *
-     * @param authReqVO
+     * @param loginOutReqVO 请求参数
+     * @return ResEx
      */
     @RequestMapping(value = "/auth/loginOut", method = RequestMethod.POST)
-    ResEx<Boolean> authLoginOut(@RequestBody AuthReqVO authReqVO);
+    ResEx<Boolean> authLoginOut(@RequestBody AuthLoginOutReqVO loginOutReqVO);
 
 }

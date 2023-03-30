@@ -13,6 +13,10 @@ public enum CommonCodeEnumEx implements IErrorInfo {
      */
     SUCCESS(10000, "成功"),
     SUCCESSEx(10000, "Success"),
+
+    GATEWAY_FLAG_LOST(91209100, "未授权的访问请求"),
+
+    GATEWAY_TIMEOUT(91209101, "请求访问超时"),
     ;
 
     private final int code;

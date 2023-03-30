@@ -3,6 +3,8 @@
 package com.zlf.serverorder.config.interceptor;
 
 
+import com.zlf.commonbase.constant.CommonConstants;
+import com.zlf.commonbase.utils.GatewayUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        //校验网关标识
+        GatewayUtil.checkGatewayTimestamp(request.getHeader(CommonConstants.GATEWAY_CHECK_TIMESTAMP));
         authenticationHandler.parseHttpToken(request, handler);
         return true;
     }

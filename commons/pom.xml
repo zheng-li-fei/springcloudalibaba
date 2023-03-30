@@ -21,6 +21,7 @@
         <module>common-api</module>
         <module>common-base</module>
         <module>common-redis</module>
+        <module>common-mysql</module>
     </modules>
 
 </project>
