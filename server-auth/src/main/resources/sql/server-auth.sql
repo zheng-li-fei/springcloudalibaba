@@ -19,4 +19,5 @@ CREATE TABLE `users`
     `version`          int(11) DEFAULT NULL COMMENT '版本号',
     `deleted`          bit(1)                          DEFAULT NULL COMMENT '是否已删除',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='系统通知';
+    KEY `idx_user_id` (`user_id`) USING BTREE
+) ENGINE=InnoDBDEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='用户信息';

@@ -23,12 +23,18 @@
 
         <dependency>
             <groupId>com.zlf</groupId>
-            <artifactId>common-redis</artifactId>
+            <artifactId>common-nacos</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.zlf</groupId>
-            <artifactId>common-mysql</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>${redission.version}</version>
         </dependency>
 
         <!-- gateway 网关依赖 -->
@@ -36,28 +42,18 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-
-        <!-- nacos 服务注册发现（客户端）依赖 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!-- nacos-config 配置中心依赖 -->
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <!-- 排除的配置文件-->
-                <excludes>
-                    <exclude>**/application-*.yml</exclude>
-                    <exclude>**/application-*.properties</exclude>
-                </excludes>
+                <filtering>true</filtering>
+                <includes>
+                    <include>bootstrap.properties</include>
+                    <include>application-${profileActive}.properties</include>
+                    <include>logback-spring.xml</include>
+                </includes>
             </resource>
         </resources>
         <plugins>

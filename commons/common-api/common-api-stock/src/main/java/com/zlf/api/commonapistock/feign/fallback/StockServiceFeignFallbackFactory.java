@@ -5,7 +5,7 @@ import com.zlf.api.commonapistock.bo.StockResBO;
 import com.zlf.api.commonapistock.feign.StockFeignClient;
 import com.zlf.api.commonapistock.vo.StockReqVO;
 
-import com.zlf.commonapicore.enums.CommonApiErrorEnum;
+import com.zlf.api.commonapicore.enums.CommonApiErrorEnum;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

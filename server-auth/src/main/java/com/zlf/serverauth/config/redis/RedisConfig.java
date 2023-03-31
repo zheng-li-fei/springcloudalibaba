@@ -1,4 +1,4 @@
-package com.zlf.commonredis.config;
+package com.zlf.serverauth.config.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -22,6 +22,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * redis配置类
+ */
 @Configuration
 public class RedisConfig {
 
@@ -63,7 +66,7 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, Long> stringLongRedisTemplate(RedisConnectionFactory factory) {
+    public RedisTemplate<String,Long> stringLongRedisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Long> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Long.class);
@@ -84,8 +87,8 @@ public class RedisConfig {
         return template;
     }
 
-    @Bean
-    public RedisTemplate<String, String> stringStringRedisTemplate(RedisConnectionFactory factory) {
+   /* @Bean
+    public RedisTemplate<String,String> stringStringRedisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, String> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(String.class);
@@ -104,10 +107,10 @@ public class RedisConfig {
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
         return template;
-    }
+    }*/
 
     @Bean
-    public RedisTemplate<String, Integer> stringIntegerRedisTemplate(RedisConnectionFactory factory) {
+    public RedisTemplate<String,Integer> stringIntegerRedisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Integer> template = new RedisTemplate<>();
         template.setConnectionFactory(factory);
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Integer.class);

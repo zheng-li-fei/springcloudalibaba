@@ -1,7 +1,7 @@
-package com.zlf.commonapicore.config;
+package com.zlf.api.commonapicore.config;
 
 /**
- * @author ：yangxingyao02@bianfeng.com
+ * @author ：zhenglifei
  * @description ：ChannelFilter.class
  * @date ：Created in 2022/4/26 14:05
  */

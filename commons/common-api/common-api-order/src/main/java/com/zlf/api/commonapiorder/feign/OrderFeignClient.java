@@ -3,7 +3,7 @@ package com.zlf.api.commonapiorder.feign;
 import com.zlf.commonbase.utils.ResEx;
 import com.zlf.api.commonapiorder.feign.fallback.OrderServiceFeignFallbackFactory;
 import com.zlf.api.commonapiorder.vo.OrderReqVO;
-import com.zlf.commonapicore.config.OpenFeignConfig;
+import com.zlf.api.commonapicore.config.OpenFeignConfig;
 import com.zlf.commonbase.constant.ServiceNameConstants;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;

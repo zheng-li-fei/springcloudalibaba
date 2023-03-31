@@ -1,4 +1,4 @@
-package com.zlf.commonapicore.config;
+package com.zlf.api.commonapicore.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.zlf.commonbase.constant.CommonConstants;

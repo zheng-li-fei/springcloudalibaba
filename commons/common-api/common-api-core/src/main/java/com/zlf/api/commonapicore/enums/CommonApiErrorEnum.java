@@ -1,4 +1,4 @@
-package com.zlf.commonapicore.enums;
+package com.zlf.api.commonapicore.enums;
 
 
 import com.zlf.commonbase.constant.IErrorInfo;

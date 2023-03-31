@@ -1,4 +1,4 @@
-package com.zlf.commonapicore.config;
+package com.zlf.api.commonapicore.config;
 
 import com.google.common.base.Charsets;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 
 /**
- * @author yangxingyao
+ * @author zhenglifei
  * @version 1.0.0
  * @ClassName RequestWrapper.java
  * @Description RequestWrapper封装类，

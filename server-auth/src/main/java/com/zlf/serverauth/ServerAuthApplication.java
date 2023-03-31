@@ -9,9 +9,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.util.TimeZone;
 
-@ComponentScan(basePackages = "com.zlf.*")
+//@ComponentScan(basePackages = {"com.zlf.commonbase.*","com.zlf.api.*","com.zlf.commonmysql.*"})
+@ComponentScan(basePackages = {"com.zlf.*"})
 @MapperScan(basePackages = "com.zlf.serverauth.dao")
-@EnableFeignClients(basePackages = "com.zlf.api.**.feign")
+@EnableFeignClients(basePackages = "com.zlf.api.*")
 @EnableDiscoveryClient
 @SpringBootApplication
 public class ServerAuthApplication {

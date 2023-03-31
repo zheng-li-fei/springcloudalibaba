@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.zlf</groupId>
+        <groupId>com.zlf.api</groupId>
         <artifactId>common-api</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -16,7 +16,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.zlf</groupId>
+            <groupId>com.zlf.api</groupId>
             <artifactId>common-api-core</artifactId>
         </dependency>
     </dependencies>

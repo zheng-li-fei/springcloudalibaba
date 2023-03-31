@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @describle: 全局异常处理
- * @author: yangxingyao
+ * @author: zhenglifei
  * @create: 2020/12/18
  **/
 @ControllerAdvice

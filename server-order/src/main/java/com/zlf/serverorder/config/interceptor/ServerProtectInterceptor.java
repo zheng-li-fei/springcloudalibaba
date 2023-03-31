@@ -1,5 +1,7 @@
 package com.zlf.serverorder.config.interceptor;
 
+import com.zlf.commonbase.constant.CommonConstants;
+import com.zlf.commonbase.utils.GatewayUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -20,8 +22,10 @@ public class ServerProtectInterceptor implements HandlerInterceptor {
         if (HttpMethod.OPTIONS.toString().equals(request.getMethod())) {
             response.setHeader("Access-Control-Max-Age", "1800");
             response.setStatus(HttpStatus.NO_CONTENT.value());
-            return false; // 跳出拦截调用链
+            return false;
         }
+        //校验网关标识
+        GatewayUtil.checkGatewayTimestamp(request.getHeader(CommonConstants.GATEWAY_CHECK_TIMESTAMP));
         return true;
     }
 }

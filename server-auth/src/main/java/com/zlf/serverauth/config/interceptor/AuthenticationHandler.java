@@ -6,11 +6,8 @@ import com.zlf.commonbase.constant.CommonConstants;
 import com.zlf.commonbase.content.UserContext;
 import com.zlf.commonbase.exception.BizException;
 import com.zlf.commonbase.model.AuthUser;
-import com.zlf.serverauth.dao.AuthDao;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 
@@ -18,18 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Desc:
- * @author: yangxingyao
+ * @author: zhenglifei
  * @date: 2021/1/25 15:13
- * @warning：本内容仅限于浙江壹企通科技发展有限公司内部传阅，禁止外泄以及用于其他的商业目的
  */
 @Component
 @Slf4j
 public class AuthenticationHandler {
-
-    @Autowired
-    RedisTemplate<String, String> redisTemplate;
-    @Autowired
-    AuthDao authDao;
 
     /**
      * 通过http请求处理 authorization

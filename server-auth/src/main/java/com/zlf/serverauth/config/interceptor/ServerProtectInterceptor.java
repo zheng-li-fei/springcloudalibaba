@@ -1,5 +1,7 @@
 package com.zlf.serverauth.config.interceptor;
 
+import com.zlf.commonbase.constant.CommonConstants;
+import com.zlf.commonbase.utils.GatewayUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ public class ServerProtectInterceptor implements HandlerInterceptor {
             response.setStatus(HttpStatus.NO_CONTENT.value());
             return false;
         }
+        //校验网关标识
+        GatewayUtil.checkGatewayTimestamp(request.getHeader(CommonConstants.GATEWAY_CHECK_TIMESTAMP));
         return true;
     }
 }

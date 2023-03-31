@@ -6,7 +6,7 @@ import com.zlf.commonbase.constant.IErrorInfo;
 /**
  * 自定义异常, 异常中带数据
  *
- * @author yangxingyao02@bianfeng.com
+ * @author zhenglifei
  */
 public class BizDataException extends RuntimeException {
     private static final long serialVersionUID = 1L;

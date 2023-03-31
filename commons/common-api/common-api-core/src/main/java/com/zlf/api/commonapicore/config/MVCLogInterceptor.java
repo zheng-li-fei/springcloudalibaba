@@ -1,4 +1,4 @@
-package com.zlf.commonapicore.config;
+package com.zlf.api.commonapicore.config;
 
 import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSON;
@@ -21,7 +21,7 @@ import java.util.TreeMap;
  * 打印http日志
  * 依赖 ChannelFilter  RequestWrapper
  *
- * @author yangxy
+ * @author zhenglifei
  */
 @Slf4j
 @Component
@@ -86,15 +86,14 @@ public class MVCLogInterceptor implements HandlerInterceptor {
         sb.append("\n-----------------------------------------------------------------------------\n");
         if (!url.contains(".css") && !url.contains(".js") && !url.contains(".png") && !url.contains(".jpg")) {
             //sb.append("访问地址     :  " + url + "\n");
-            sb.append("客户ip端口  :  " + request.getRemoteAddr() + ":" + request.getRemotePort() + "\n");
+            sb.append("客户ip端口   :  " + request.getRemoteAddr() + ":" + request.getRemotePort() + "\n");
         }
         HandlerMethod h = (HandlerMethod) handler;
-        sb.append("URI         :  ").append(request.getRequestURI()).append("\n");
-        sb.append("URL         :  ").append(request.getRequestURL()).append("\n");
-        sb.append("请求参数    :  ").append(paramsMaps).append("\n");
-        sb.append("请求方式    :  ").append(request.getMethod()).append("\n");
-        sb.append("Controller  :  ").append(h.getBean().getClass().getName()).append("\n");
-        sb.append("Method      :  ").append(h.getMethod().getName()).append("\n");
+        sb.append("URL地址     :  ").append(request.getRequestURL()).append("\n");
+        sb.append("请求参数     :  ").append(paramsMaps).append("\n");
+        sb.append("请求方式     :  ").append(request.getMethod()).append("\n");
+        sb.append("入口名称     :  ").append(h.getBean().getClass().getName()).append("\n");
+        sb.append("请求方法     :  ").append(h.getMethod().getName()).append("\n");
         sb.append("-----------------------------------------------------------------------------\n");
         log.info(sb.toString());
         return true;

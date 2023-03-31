@@ -5,7 +5,7 @@ import com.zlf.api.commonapiauth.vo.AuthLoginOutReqVO;
 import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
 import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
 import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
-import com.zlf.commonapicore.enums.CommonApiErrorEnum;
+import com.zlf.api.commonapicore.enums.CommonApiErrorEnum;
 import com.zlf.commonbase.utils.ResEx;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;

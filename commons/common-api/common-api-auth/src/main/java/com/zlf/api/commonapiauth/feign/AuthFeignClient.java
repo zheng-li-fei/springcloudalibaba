@@ -6,7 +6,7 @@ import com.zlf.api.commonapiauth.vo.AuthLoginOutReqVO;
 import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
 import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
 import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
-import com.zlf.commonapicore.config.OpenFeignConfig;
+import com.zlf.api.commonapicore.config.OpenFeignConfig;
 import com.zlf.commonbase.annotation.ignoretoken.IgnoreTokenAccessAnnotation;
 import com.zlf.commonbase.annotation.ignoretoken.IgnoreTokenTypeEnum;
 import com.zlf.commonbase.constant.ServiceNameConstants;

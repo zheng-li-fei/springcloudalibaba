@@ -5,7 +5,7 @@ import com.zlf.api.commonapistock.bo.StockResBO;
 import com.zlf.api.commonapistock.feign.fallback.StockServiceFeignFallbackFactory;
 import com.zlf.api.commonapistock.vo.StockReqVO;
 
-import com.zlf.commonapicore.config.OpenFeignConfig;
+import com.zlf.api.commonapicore.config.OpenFeignConfig;
 import com.zlf.commonbase.constant.ServiceNameConstants;
 import com.zlf.commonbase.utils.ResEx;
 import org.springframework.cloud.openfeign.FeignClient;

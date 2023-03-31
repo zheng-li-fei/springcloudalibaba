@@ -3,7 +3,7 @@ package com.zlf.api.commonapiorder.feign.fallback;
 import com.zlf.commonbase.utils.ResEx;
 import com.zlf.api.commonapiorder.feign.OrderFeignClient;
 import com.zlf.api.commonapiorder.vo.OrderReqVO;
-import com.zlf.commonapicore.enums.CommonApiErrorEnum;
+import com.zlf.api.commonapicore.enums.CommonApiErrorEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Service;
