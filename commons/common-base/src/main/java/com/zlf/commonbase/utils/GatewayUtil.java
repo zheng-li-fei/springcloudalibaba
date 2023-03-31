@@ -20,7 +20,7 @@ public class GatewayUtil {
      */
     public static void checkGatewayTimestamp(String timestamp) {
         if (StringUtils.isNotBlank(timestamp)) {
-            long limitTimeMillis = Long.getLong(timestamp) + 5 * 60 * 1000;
+            long limitTimeMillis = Long.parseLong(timestamp) + 5 * 60 * 1000;
             long currentTimeMillis = System.currentTimeMillis();
             if (limitTimeMillis >= currentTimeMillis) {
                 //5分钟内访问

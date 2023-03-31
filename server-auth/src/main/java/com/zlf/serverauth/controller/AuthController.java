@@ -53,11 +53,11 @@ public class AuthController implements AuthFeignClient {
         //请求来源平台类型
         Integer platformType = loginReqVO.getPlatformType();
         //登录类型
-        Integer loginType = loginReqVO.getLoginType();
+        String loginType = loginReqVO.getLoginType();
         LoginTypeEnum loginTypeEnum = LoginTypeEnum.getLoginTypeEnumByType(loginType);
         if (loginTypeEnum == null) {
             log.error("非法登录,登录类型非法 loginType {},platformType {}", loginType, platformType);
-            return ResEx.error(AuthErrorEnum.SERVER_AUTH_ILLEGAL_LOGIN_TYPE);
+            throw new BizException(AuthErrorEnum.SERVER_AUTH_ILLEGAL_LOGIN_TYPE);
         }
         //根据类型获取登录上下文对象
         AuthService authService = getAuthServer(platformType);

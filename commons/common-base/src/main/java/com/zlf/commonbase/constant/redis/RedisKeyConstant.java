@@ -1,4 +1,4 @@
-package com.zlf.commonbase.constant;
+package com.zlf.commonbase.constant.redis;
 
 /**
  * @description: redis key操作常量

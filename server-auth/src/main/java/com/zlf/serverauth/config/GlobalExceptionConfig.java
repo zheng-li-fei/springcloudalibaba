@@ -1,15 +1,22 @@
 package com.zlf.serverauth.config;
 
 
+import com.alibaba.fastjson2.JSONObject;
 import com.zlf.commonbase.exception.BizDataException;
 import com.zlf.commonbase.exception.BizException;
 import com.zlf.commonbase.utils.ResEx;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @describle: 全局异常处理
@@ -41,6 +48,17 @@ public class GlobalExceptionConfig {
         return ResEx.error(e.getCode(), e.getMessage(), e.getData());
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseBody
+    public ResEx handleConstraintViolationException(ConstraintViolationException ex) {
+        String errorMessage = "";
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            errorMessage += violation.getMessage();
+            break;
+        }
+        return ResEx.error(500, errorMessage);
+    }
+
     /**
      * 入参参数校验
      */
@@ -49,7 +67,13 @@ public class GlobalExceptionConfig {
     public ResEx argsNotValidExceptionHandle(MethodArgumentNotValidException e) {
         log.error("参数校验不通过 ==>", e);
         String errorMessage = e.getBindingResult().getFieldError().getDefaultMessage();
-        return ResEx.error(500, errorMessage);
+        // 处理校验异常
+        BindingResult bindingResult = e.getBindingResult();
+        List<String> errorMessages = bindingResult.getFieldErrors().stream()
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        return ResEx.error(500, JSONObject.toJSONString(errorMessages));
     }
 
     /**

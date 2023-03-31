@@ -5,6 +5,7 @@ import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
 import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
 import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
 import com.zlf.serverauth.dao.AuthDao;
+import com.zlf.serverauth.enums.LoginTypeEnum;
 import com.zlf.serverauth.enums.PlatformTypeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,59 @@ public class AuthICBCServiceImpl extends AbstractAuthService {
         return Boolean.TRUE;
     }
 
+    /**
+     * 校验登录参数
+     * @param loginTypeEnum 登录类型
+     * @param loginReqVO    请求参数
+     */
+    @Override
+    protected void validLoginParam(LoginTypeEnum loginTypeEnum, AuthLoginReqVO loginReqVO) {
+
+    }
+
+    /**
+     * 账号+密码登录
+     * @param loginReqVO 请求参数
+     * @return
+     */
+    @Override
+    protected AuthLoginResVO getAccountPasswordLoginInfo(AuthLoginReqVO loginReqVO) {
+        return null;
+    }
+
+    /**
+     * 手机号+密码登录
+     * @param loginReqVO 请求参数
+     * @return
+     */
+    @Override
+    protected AuthLoginResVO getPhonePasswordLoginInfo(AuthLoginReqVO loginReqVO) {
+        return null;
+    }
+
+    /**
+     * 手机号+验证码
+     * @param loginReqVO 请求参数
+     * @return
+     */
+    @Override
+    protected AuthLoginResVO getPhoneCodeLoginInfo(AuthLoginReqVO loginReqVO) {
+        return null;
+    }
+
+    /**
+     * 第三方登录
+     * @param loginReqVO 请求参数
+     * @return
+     */
+    @Override
+    protected AuthLoginResVO getThirdLoginInfo(AuthLoginReqVO loginReqVO) {
+        return null;
+    }
+
     @Override
     public AuthLoginResVO authLogin(AuthLoginReqVO loginReqVO) {
-        return AuthLoginResVO.builder().build();
+        return super.authLogin(loginReqVO);
     }
 
     @Override

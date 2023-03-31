@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * @description:
+ * @description: 登录注册服务
  * @author: zhenglifei
  * @create: 2022/4/19 10:34
  **/

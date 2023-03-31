@@ -2,7 +2,7 @@ package com.zlf.gatewayshop.filter;
 
 import cn.hutool.jwt.JWTUtil;
 import com.zlf.commonbase.constant.CommonConstants;
-import com.zlf.commonbase.constant.RedisKeyConstant;
+import com.zlf.commonbase.constant.redis.RedisKeyConstant;
 import com.zlf.commonbase.exception.BizException;
 import com.zlf.commonbase.model.AuthUser;
 import lombok.extern.slf4j.Slf4j;

@@ -27,6 +27,6 @@ public interface CommonConstants {
     /**
      * 登录AES加密密码
      */
-    String LOGIN_AES_KEY = "ptkf4ewzutk0leydzf35ia3gderz2ecs";
+    String LOGIN_AES_KEY = "gwsmd5aafiv8vwjf";
 
 }

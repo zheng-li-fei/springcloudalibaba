@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+
 /**
  * @describle: 全局异常处理
  * @author: zhenglifei
@@ -39,6 +42,17 @@ public class GlobalExceptionConfig {
     public ResEx exceptionHandler(BizDataException e) {
         log.error("biz error 带返回数据的异常 ==> e {}", e.toString());
         return ResEx.error(e.getCode(), e.getMessage(), e.getData());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseBody
+    public ResEx handleConstraintViolationException(ConstraintViolationException ex) {
+        String errorMessage = "";
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            errorMessage += violation.getMessage();
+            break;
+        }
+        return ResEx.error(500, errorMessage);
     }
 
     /**

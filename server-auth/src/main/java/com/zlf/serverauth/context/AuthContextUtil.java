@@ -1,7 +1,6 @@
 package com.zlf.serverauth.context;
 
 import com.zlf.commonbase.exception.BizException;
-import com.zlf.serverauth.enums.LoginTypeEnum;
 import com.zlf.serverauth.enums.PlatformTypeEnum;
 import com.zlf.serverauth.enums.error.AuthErrorEnum;
 import com.zlf.serverauth.service.AuthService;
@@ -11,7 +10,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,11 +23,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AuthContextUtil implements ApplicationContextAware {
 
     private static final Map<PlatformTypeEnum, AuthService> authServiceMap = new ConcurrentHashMap<>();
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         Map<String, AuthService> authMap = applicationContext.getBeansOfType(AuthService.class);
-        if(authMap.size() > 0){
-            authMap.forEach((s, authService) -> authServiceMap.put(authService.getPlatformType(),authService));
+        if (authMap.size() > 0) {
+            authMap.forEach((s, authService) -> authServiceMap.put(authService.getPlatformType(), authService));
         }
     }
 

@@ -21,7 +21,7 @@ public class AuthLoginReqVO {
 
     @NotNull(message = "登录类型不能为空")
     @ApiModelProperty(value = "登录类型: 101: 用户名密码登录, 111: 手机号密码登录, 121: 手机号短信验证码登录", required = true)
-    Integer loginType;
+    String loginType;
 
     @NotNull(message = "请求来源平台类型")
     @ApiModelProperty(value = "平台类型: 10-商城, 20-工行", required = true)
