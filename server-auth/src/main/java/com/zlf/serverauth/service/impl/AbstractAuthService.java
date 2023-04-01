@@ -1,10 +1,13 @@
 package com.zlf.serverauth.service.impl;
 
-import com.zlf.api.commonapiauth.vo.AuthLoginOutReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
-import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLoginReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLogoutReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthRegisterReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthUserListReqVO;
+import com.zlf.api.commonapiauth.vo.res.AuthLoginResVO;
+import com.zlf.api.commonapiauth.vo.res.AuthUserListResVO;
 import com.zlf.commonbase.exception.BizException;
+import com.zlf.commonbase.model.base.PageQueryResponse;
 import com.zlf.serverauth.enums.LoginTypeEnum;
 import com.zlf.serverauth.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
@@ -95,7 +98,12 @@ public abstract class AbstractAuthService implements AuthService {
     }
 
     @Override
-    public Boolean authLoginOut(AuthLoginOutReqVO loginOutReqVO) {
+    public PageQueryResponse<AuthUserListResVO> getUserListByPage(AuthUserListReqVO reqVO) {
+        throw new BizException("暂未支持");
+    }
+
+    @Override
+    public Boolean authLoginOut(AuthLogoutReqVO loginOutReqVO) {
         throw new BizException("暂未支持");
     }
 }

@@ -1,7 +1,7 @@
 package com.zlf.serverauth.config.sentinel;
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.zlf.api.commonapiauth.vo.AuthReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthRegisterReqVO;
 import com.zlf.commonbase.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,12 +16,12 @@ public class AuthBlockHandler {
     /**
      * 下单服务限流
      *
-     * @param authReqVO
+     * @param registerReqVO
      * @param blockException
      * @return
      */
-    public static boolean authRegisterBlockHandler(AuthReqVO authReqVO, BlockException blockException) {
-        log.error("service-auth 服务被限流了 {},blockException {}",authReqVO, blockException);
+    public static boolean authRegisterBlockHandler(AuthRegisterReqVO registerReqVO, BlockException blockException) {
+        log.error("service-auth 服务被限流了 {},blockException {}", registerReqVO, blockException);
         throw new BizException("service-auth 服务被限流了");
     }
 

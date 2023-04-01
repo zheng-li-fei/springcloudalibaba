@@ -1,20 +1,26 @@
 package com.zlf.serverauth.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.jwt.JWTUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.zlf.api.commonapiauth.vo.AuthLoginOutReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
-import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zlf.api.commonapiauth.vo.req.AuthLoginReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLogoutReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthRegisterReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthUserListReqVO;
+import com.zlf.api.commonapiauth.vo.res.AuthLoginResVO;
+import com.zlf.api.commonapiauth.vo.res.AuthUserListResVO;
 import com.zlf.commonbase.constant.CommonConstants;
 import com.zlf.commonbase.constant.redis.RedisKeyConstant;
 import com.zlf.commonbase.constant.redis.RedissionConstantKey;
 import com.zlf.commonbase.exception.BizException;
 import com.zlf.commonbase.model.AuthUser;
+import com.zlf.commonbase.model.base.PageQueryResponse;
 import com.zlf.serverauth.dao.AuthDao;
 import com.zlf.serverauth.dao.entity.AuthDO;
 import com.zlf.serverauth.enums.LoginTypeEnum;
@@ -102,38 +108,38 @@ public class AuthShopServiceImpl extends AbstractAuthService {
     @Override
     protected void validLoginParam(LoginTypeEnum loginTypeEnum, AuthLoginReqVO loginReqVO) {
 
-        if(loginReqVO ==null){
+        if (loginReqVO == null) {
             log.error("账号密码登录,请求参数为空");
             throw new BizException(AuthErrorEnum.SERVER_AUTH_REQ_PARAM_NOT_FOUND);
         }
 
         if (loginTypeEnum.isAccountPasswordLogin()) {
             //账号+密码
-            if(StringUtils.isBlank(loginReqVO.getUserName())){
+            if (StringUtils.isBlank(loginReqVO.getUserName())) {
                 log.error("账号密码登录,用户名为空");
                 throw new BizException(AuthErrorEnum.SERVER_AUTH_REQ_USERNAME_NOT_FOUND);
             }
-            if(StringUtils.isBlank(loginReqVO.getUserPwd())){
+            if (StringUtils.isBlank(loginReqVO.getUserPwd())) {
                 log.error("账号密码登录,密码为空");
                 throw new BizException(AuthErrorEnum.SERVER_AUTH_REQ_PWD_NOT_FOUND);
             }
         } else if (loginTypeEnum.isPhonePasswordLogin()) {
             //手机号+密码
-            if(StringUtils.isBlank(loginReqVO.getPhone())){
+            if (StringUtils.isBlank(loginReqVO.getPhone())) {
                 log.error("手机号密码登录,手机号为空");
                 throw new BizException(AuthErrorEnum.SERVER_AUTH_REQ_PHONE_NOT_FOUND);
             }
-            if(StringUtils.isBlank(loginReqVO.getUserPwd())){
+            if (StringUtils.isBlank(loginReqVO.getUserPwd())) {
                 log.error("手机号密码登录,密码为空");
                 throw new BizException(AuthErrorEnum.SERVER_AUTH_REQ_PWD_NOT_FOUND);
             }
         } else if (loginTypeEnum.isPhoneCodeLogin()) {
             //手机号+验证码
-            if(StringUtils.isBlank(loginReqVO.getPhone())){
+            if (StringUtils.isBlank(loginReqVO.getPhone())) {
                 log.error("手机号验证码登录,手机号为空");
                 throw new BizException(AuthErrorEnum.SERVER_AUTH_REQ_PHONE_NOT_FOUND);
             }
-            if(StringUtils.isBlank(loginReqVO.getCode())){
+            if (StringUtils.isBlank(loginReqVO.getCode())) {
                 log.error("手机号验证码登录,验证码为空");
                 throw new BizException(AuthErrorEnum.SERVER_AUTH_REQ_CODE_NOT_FOUND);
             }
@@ -251,7 +257,25 @@ public class AuthShopServiceImpl extends AbstractAuthService {
     }
 
     @Override
-    public Boolean authLoginOut(AuthLoginOutReqVO loginOutReqVO) {
+    public PageQueryResponse<AuthUserListResVO> getUserListByPage(AuthUserListReqVO reqVO) {
+        Page<AuthDO> page = new Page<>(reqVO.getCurrent(), reqVO.getPageSize());
+        //查询到的数据
+        Page<AuthDO> authListPage = authDao.selectPage(page, new LambdaQueryWrapper<AuthDO>()
+                .eq(AuthDO::getPlatformType, reqVO.getPlatformType())
+                .like(StringUtils.isNotBlank(reqVO.getUserName()), AuthDO::getUserName, reqVO.getUserName())
+                .like(StringUtils.isNotBlank(reqVO.getPhone()), AuthDO::getPhone, reqVO.getPhone()));
+
+        IPage<AuthUserListResVO> convert = authListPage.convert(authDO -> {
+            AuthUserListResVO resVO = new AuthUserListResVO();
+            BeanUtil.copyProperties(authDO, resVO);
+            return resVO;
+        });
+
+        return PageQueryResponse.create(reqVO, convert.getRecords(), convert.getTotal());
+    }
+
+    @Override
+    public Boolean authLoginOut(AuthLogoutReqVO loginOutReqVO) {
         String userId = loginOutReqVO.getUserId();
         //删除redis缓存 userId -> token
         redisTemplate.delete(String.format(RedisKeyConstant.SERVER_AUTH_SHOP_LOGIN_USERID_STR, userId));

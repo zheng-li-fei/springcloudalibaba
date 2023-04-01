@@ -1,4 +1,4 @@
-package com.zlf.api.commonapiauth.vo;
+package com.zlf.api.commonapiauth.vo.res;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
 package com.zlf.serverauth.service.impl;
 
-import com.zlf.api.commonapiauth.vo.AuthLoginOutReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
-import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLogoutReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLoginReqVO;
+import com.zlf.api.commonapiauth.vo.res.AuthLoginResVO;
+import com.zlf.api.commonapiauth.vo.req.AuthRegisterReqVO;
 import com.zlf.serverauth.dao.AuthDao;
 import com.zlf.serverauth.enums.LoginTypeEnum;
 import com.zlf.serverauth.enums.PlatformTypeEnum;
@@ -95,7 +95,7 @@ public class AuthICBCServiceImpl extends AbstractAuthService {
     }
 
     @Override
-    public Boolean authLoginOut(AuthLoginOutReqVO loginOutReqVO) {
+    public Boolean authLoginOut(AuthLogoutReqVO loginOutReqVO) {
         return Boolean.TRUE;
     }
 

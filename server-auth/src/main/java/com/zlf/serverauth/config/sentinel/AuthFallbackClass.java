@@ -1,6 +1,6 @@
 package com.zlf.serverauth.config.sentinel;
 
-import com.zlf.api.commonapiauth.vo.AuthReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthRegisterReqVO;
 import com.zlf.commonbase.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,14 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthFallbackClass {
 
     /**
-     * 下单服务降级
+     * 服务降级
      *
-     * @param authReqVO
+     * @param registerReqVO
      * @param throwable
      * @return
      */
-    public static boolean authRegisterFallback(AuthReqVO authReqVO, Throwable throwable) {
-        log.error("service-auth 服务被降级了 {} , throwable {}",authReqVO, throwable);
+    public static boolean authRegisterFallback(AuthRegisterReqVO registerReqVO, Throwable throwable) {
+        log.error("service-auth 服务被降级了 {} , throwable {}",registerReqVO, throwable);
         throw new BizException("service-auth 服务被降级了 ");
     }
 

@@ -1,10 +1,13 @@
 package com.zlf.serverauth.service;
 
 
-import com.zlf.api.commonapiauth.vo.AuthLoginOutReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
-import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLoginReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLogoutReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthRegisterReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthUserListReqVO;
+import com.zlf.api.commonapiauth.vo.res.AuthLoginResVO;
+import com.zlf.api.commonapiauth.vo.res.AuthUserListResVO;
+import com.zlf.commonbase.model.base.PageQueryResponse;
 import com.zlf.serverauth.enums.PlatformTypeEnum;
 import org.springframework.validation.annotation.Validated;
 
@@ -39,12 +42,14 @@ public interface AuthService {
      */
     AuthLoginResVO authLogin(@Valid @NotNull AuthLoginReqVO loginReqVO);
 
+    PageQueryResponse<AuthUserListResVO> getUserListByPage(AuthUserListReqVO reqVO);
+
     /**
      * 退出
      * @param loginOutReqVO 请求参数
      * @return  Boolean
      */
-    Boolean authLoginOut(@Valid @NotNull AuthLoginOutReqVO loginOutReqVO);
+    Boolean authLoginOut(@Valid @NotNull AuthLogoutReqVO loginOutReqVO);
 
 
 }

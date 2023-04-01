@@ -2,12 +2,15 @@ package com.zlf.serverauth.controller;
 
 import cn.hutool.extra.servlet.ServletUtil;
 import com.zlf.api.commonapiauth.feign.AuthFeignClient;
-import com.zlf.api.commonapiauth.vo.AuthLoginOutReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginReqVO;
-import com.zlf.api.commonapiauth.vo.AuthLoginResVO;
-import com.zlf.api.commonapiauth.vo.AuthRegisterReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLogoutReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthLoginReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthRegisterReqVO;
+import com.zlf.api.commonapiauth.vo.req.AuthUserListReqVO;
+import com.zlf.api.commonapiauth.vo.res.AuthLoginResVO;
+import com.zlf.api.commonapiauth.vo.res.AuthUserListResVO;
 import com.zlf.commonbase.content.UserContext;
 import com.zlf.commonbase.exception.BizException;
+import com.zlf.commonbase.model.base.PageQueryResponse;
 import com.zlf.commonbase.utils.ResEx;
 import com.zlf.serverauth.context.AuthContextUtil;
 import com.zlf.serverauth.enums.LoginTypeEnum;
@@ -66,6 +69,15 @@ public class AuthController implements AuthFeignClient {
         return ResEx.success(authService.authLogin(loginReqVO));
     }
 
+    @Override
+    public ResEx<PageQueryResponse<AuthUserListResVO>> getUserListByPage(AuthUserListReqVO reqVO) {
+        Integer platformType = UserContext.getPlatformType();
+        //根据类型获取登录上下文对象
+        AuthService authService = getAuthServer(platformType);
+        reqVO.setPlatformType(platformType);
+        return ResEx.success(authService.getUserListByPage(reqVO));
+    }
+
     /**
      * 退出
      *
@@ -73,13 +85,15 @@ public class AuthController implements AuthFeignClient {
      * @return ResEx
      */
     @Override
-    public ResEx<Boolean> authLoginOut(AuthLoginOutReqVO loginOutReqVO) {
+    public ResEx<Boolean> authLoginOut(AuthLogoutReqVO loginOutReqVO) {
         //请求来源平台类型
         Integer platformType = loginOutReqVO.getPlatformType();
         AuthService authServer = getAuthServer(platformType);
         loginOutReqVO.setUserId(UserContext.getLoginUser().getUserId());
         return ResEx.success(authServer.authLoginOut(loginOutReqVO));
     }
+
+
 
     /**
      * 获取服务类

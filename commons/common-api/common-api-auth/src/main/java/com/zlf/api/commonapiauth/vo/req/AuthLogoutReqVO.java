@@ -1,4 +1,4 @@
-package com.zlf.api.commonapiauth.vo;
+package com.zlf.api.commonapiauth.vo.req;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthLoginOutReqVO {
+public class AuthLogoutReqVO {
 
     @NotNull(message = "请求来源平台类型")
     @ApiModelProperty(value = "平台类型: 10-商城, 20-工行", required = true)
