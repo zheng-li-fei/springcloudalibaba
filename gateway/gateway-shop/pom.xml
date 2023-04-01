@@ -51,7 +51,7 @@
                 <filtering>true</filtering>
                 <includes>
                     <include>bootstrap.properties</include>
-                    <include>application-${profileActive}.properties</include>
+<!--                    <include>application-${profileActive}.properties</include>-->
                     <include>logback-spring.xml</include>
                 </includes>
             </resource>

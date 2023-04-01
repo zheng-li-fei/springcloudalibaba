@@ -14,7 +14,7 @@ public enum AuthErrorEnum implements IErrorInfo {
      * 认证中心错误枚举
      */
     SERVER_AUTH_ILLEGAL_LOGIN_TYPE(91259100, "非法登录类型"),
-    SERVER_AUTH_ILLEGAL_PLATFORM_TYPE(91259101, "非法来源登录平台"),
+    SERVER_AUTH_ILLEGAL_PLATFORM_TYPE(91259101, "非法来源请求认证中心"),
     SERVER_AUTH_TYPE_ERROR(91259104, "type非法"),
     SERVER_AUTH_BEAN_NOT_FOUND(91259105, "bean 找不到"),
 

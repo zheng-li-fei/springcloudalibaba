@@ -52,7 +52,7 @@ public interface AuthFeignClient {
      * @param loginOutReqVO 请求参数
      * @return ResEx
      */
-    @RequestMapping(value = "/auth/loginOut", method = RequestMethod.POST)
+    @RequestMapping(value = "/auth/logout", method = RequestMethod.POST)
     ResEx<Boolean> authLoginOut(@RequestBody AuthLoginOutReqVO loginOutReqVO);
 
 }

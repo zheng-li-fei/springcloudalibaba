@@ -1,18 +1,22 @@
 package com.zlf.gatewayshop.filter;
 
 import cn.hutool.jwt.JWTUtil;
+import com.alibaba.fastjson2.JSONObject;
 import com.zlf.commonbase.constant.CommonConstants;
 import com.zlf.commonbase.constant.redis.RedisKeyConstant;
-import com.zlf.commonbase.exception.BizException;
 import com.zlf.commonbase.model.AuthUser;
+import com.zlf.commonbase.utils.ResEx;
+import com.zlf.gatewayshop.enums.error.GatewayErrorEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -34,7 +38,6 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         //当前请求路径
@@ -51,25 +54,27 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
             //2.1 token不为空且有效
             if (StringUtils.isBlank(token) || !JWTUtil.verify(token, CommonConstants.HMAC_KEY.getBytes())) {
                 log.error("无效的token访问 {}", token);
-                response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                return response.setComplete();
+                Mono<DataBuffer> dataBufferMono = buildDataBuffer(response, GatewayErrorEnum.GATEWAY_ILLEGAL_TOKEN);
+                return response.writeWith(dataBufferMono);
             }
             //转为用户对象
             AuthUser authUser = JWTUtil.parseToken(token).getPayloads().toBean(AuthUser.class);
             //2.2 redis中存在token(jwt的token不会自动失效)
             String redisKey = String.format(RedisKeyConstant.SERVER_AUTH_SHOP_LOGIN_USERID_STR, authUser.getUserId());
             Boolean aBoolean = redisTemplate.hasKey(redisKey);
-            if(aBoolean == null || !aBoolean){
+            if (aBoolean == null || !aBoolean) {
                 //token不存在或已失效
                 log.error("用户登录过期，请重新登录");
-                throw new BizException("用户登录过期，请重新登录");
+                Mono<DataBuffer> dataBufferMono = buildDataBuffer(response, GatewayErrorEnum.GATEWAY_LOGIN_EXPIRE);
+                return response.writeWith(dataBufferMono);
             }
             //2.3 redis缓存中的token和当前token一致
             String tokenValue = redisTemplate.opsForValue().get(redisKey);
-            if(!StringUtils.equals(token,tokenValue)){
+            if (!StringUtils.equals(token, tokenValue)) {
                 //当前token已失效
                 log.error("用户登录过期，请重新登录");
-                throw new BizException("用户登录过期，请重新登录");
+                Mono<DataBuffer> dataBufferMono = buildDataBuffer(response, GatewayErrorEnum.GATEWAY_LOGIN_EXPIRE);
+                return response.writeWith(dataBufferMono);
             }
         }
         ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(h -> {
@@ -85,4 +90,9 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
         return 1;
     }
 
+    private Mono<DataBuffer> buildDataBuffer(ServerHttpResponse response, GatewayErrorEnum errorEnum) {
+        response.getHeaders().add(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        DataBuffer wrap = response.bufferFactory().wrap(JSONObject.toJSONString(ResEx.error(errorEnum.getCode(), errorEnum.getMessage())).getBytes());
+        return Mono.just(wrap);
+    }
 }

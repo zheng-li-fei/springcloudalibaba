@@ -45,11 +45,6 @@ public class AuthShopServiceImpl extends AbstractAuthService {
     @Autowired
     RedisTemplate<String, String> redisTemplate;
 
-    public static void main(String[] args) {
-//        System.out.println(RandomUtil.randomString(16));
-        System.out.println(SecureUtil.aes(CommonConstants.LOGIN_AES_KEY.getBytes()).encryptBase64("123456"));
-    }
-
     @Override
     public PlatformTypeEnum getPlatformType() {
         return PlatformTypeEnum.SHOP;
@@ -178,7 +173,7 @@ public class AuthShopServiceImpl extends AbstractAuthService {
             decodePassword = SecureUtil.aes(CommonConstants.LOGIN_AES_KEY.getBytes()).decryptStr(userPwd);
         } catch (Exception e) {
             log.error("账户密码登录,密码解码失败! password {}", userPwd, e);
-            throw new BizException(AuthErrorEnum.SERVER_AUTH_DECODE_PWD_ERROR);
+            throw new BizException(AuthErrorEnum.SERVER_AUTH_USER_OR_PWD_ERROR);
         }
         //2.校验密码是否正确
         if (!BCrypt.checkpw(decodePassword, authDO.getUserPwd())) {
