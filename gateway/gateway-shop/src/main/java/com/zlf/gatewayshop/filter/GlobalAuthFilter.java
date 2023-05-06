@@ -1,11 +1,13 @@
 package com.zlf.gatewayshop.filter;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.jwt.JWTUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.zlf.commonbase.constant.CommonConstants;
 import com.zlf.commonbase.constant.redis.RedisKeyConstant;
 import com.zlf.commonbase.model.AuthUser;
 import com.zlf.commonbase.utils.ResEx;
+import com.zlf.gatewayshop.config.GlobalEnvironmentConfig;
 import com.zlf.gatewayshop.enums.error.GatewayErrorEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +37,8 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
 
     @Autowired
     RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    GlobalEnvironmentConfig environmentConfig;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -44,10 +48,8 @@ public class GlobalAuthFilter implements GlobalFilter, Ordered {
         String reqPath = request.getURI().getPath();
 
         //1.需要跳过鉴权的接口集合
-        List<String> ignoreInterfaceList = new ArrayList<>();
-        ignoreInterfaceList.add("/auth/register");
-        ignoreInterfaceList.add("/auth/login");
-        boolean ignore = ignoreInterfaceList.stream().anyMatch(reqPath::contains);
+        List<String> ignoreTokenUrls = environmentConfig.getIgnoreTokenUrls();
+        boolean ignore = CollectionUtil.isNotEmpty(ignoreTokenUrls) && ignoreTokenUrls.stream().anyMatch(reqPath::contains);
         if (!ignore) {
             //2.校验权限,验证token有效性
             String token = exchange.getRequest().getHeaders().getFirst(CommonConstants.AUTHORIZATION);
